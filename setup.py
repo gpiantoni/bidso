@@ -10,7 +10,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
-    name='bids0',
+    name='bidso',
     version=VERSION,
     description='Transparent Object-Oriented Approach to BIDS in Python',
     long_description=long_description,
