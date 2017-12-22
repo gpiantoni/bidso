@@ -1,9 +1,10 @@
-from .test_bids import (bids_Core,
-                        bids_Tsv,
-                        bids_Json,
-                        bids_Channels,
-                        bids_Events,
-                        bids_Electrodes,
-                        bids_Modality,
-                        dir_Root,
-                        )
+from .files import (file_Core,
+                    file_Tsv,
+                    file_Json,
+                    file_Channels,
+                    file_Events,
+                    file_Electrodes,
+                    file_Modality,
+                    )
+from .directories import (dir_Root,
+                          )
