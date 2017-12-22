@@ -7,6 +7,9 @@ cache:
  - directories:
    - $HOME/.cache/pip
 
+before_install:
+ - git clone -b bep010_ieeg https://github.com/dorahermes/BIDS-examples.git 
+
 install: 
  # install requirements
  - pip install nibabel 

@@ -1,41 +1,8 @@
-
-# coding: utf-8
-
-# In[1]:
-
-
-
-# In[123]:
-
-
-from re import match, search
+from re import search
+from nibabel import load as ni_load
 from json import load as json_load
 
 from pathlib import Path
-
-
-# In[171]:
-
-
-def _read_tsv(filename):
-    with filename.open() as f:
-        hdr = f.readline()
-        tsv = []
-        for l in f:
-            d = {k.strip(): v.strip() for k, v in zip(hdr.split('\t'), l.split('\t'))}
-            tsv.append(d)
-    return tsv
-
-
-def _match(filename, pattern):
-    m = search(pattern, filename.stem)
-    if m is None:
-        return m
-    else:
-        return m.group(1)
-
-
-# In[172]:
 
 
 class bids_Core():
@@ -76,39 +43,6 @@ class bids_Modality(bids_Json):
         super().__init__(filename)
 
 
-filename = Path('/home/giovanni/tools/BIDS-examples/ieeg_visual/sub-01/ses-01/ieeg/sub-01_ses-01_task-visual_run-01_ieeg.json')
-m = bids_Modality(filename)
-
-filename = Path('/home/giovanni/tools/BIDS-examples/ieeg_visual/sub-01/ses-01/ieeg/sub-01_ses-01_task-visual_run-01_channels.tsv')
-c = bids_Channels(filename)
-
-filename = Path('/home/giovanni/tools/BIDS-examples/ieeg_visual/sub-01/ses-01/ieeg/sub-01_ses-01_task-visual_run-01_events.tsv')
-e = bids_Events(filename)
-
-filename = Path('/home/giovanni/tools/BIDS-examples/ieeg_visual/sub-01/ses-01/ieeg/sub-01_ses-01_acq-corrected_electrodes.tsv')
-elec = bids_Electrodes(filename)
-
-
-t1 = bids_Json('/home/giovanni/tools/BIDS-examples/ieeg_visual/sub-01/ses-01/anat/sub-01_ses-01_T1w.json')
-
-
-# In[173]:
-
-
-dirname = Path('/home/giovanni/tools/BIDS-examples/ieeg_visual')
-
-
-# In[174]:
-
-
-from nibabel import load as ni_load
-gii = ni_load('/home/giovanni/tools/BIDS-examples/ieeg_visual/sub-01/ses-01/anat/sub-01_ses-01_T1w_pial.R.surf.gii')
-g = gii.darrays[0]
-
-
-# In[180]:
-
-
 class dir_Core():
     def __init__(self, dirname):
         self.dirname = Path(dirname)
@@ -123,20 +57,19 @@ class dir_Root(dir_Core):
             self.subjects.append(dir_Core(self.dirname / participant['participant_id']))
 
 
-# In[181]:
+def _read_tsv(filename):
+    with filename.open() as f:
+        hdr = f.readline()
+        tsv = []
+        for l in f:
+            d = {k.strip(): v.strip() for k, v in zip(hdr.split('\t'), l.split('\t'))}
+            tsv.append(d)
+    return tsv
 
 
-self = dir_Root('/home/giovanni/tools/BIDS-examples/ieeg_visual')
-
-
-# In[183]:
-
-
-self.subjects[0]
-
-
-# In[178]:
-
-
-
-
+def _match(filename, pattern):
+    m = search(pattern, filename.stem)
+    if m is None:
+        return m
+    else:
+        return m.group(1)
