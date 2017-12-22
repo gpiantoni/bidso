@@ -1,0 +1,30 @@
+language: python
+
+python:
+ - "3.6"
+
+cache: 
+ - directories:
+   - $HOME/.cache/pip
+
+install: 
+ # install requirements
+ - pip install nibabel 
+ - pip install pytest pytest-cov codecov
+ - pip install -e .
+
+script:
+ - python setup_wonambi.py --tests
+
+after_success:
+ - codecov
+
+notifications:
+ email: false
+
+deploy:
+ - provider: pypi
+   user: $PYPI_USER
+   password: $PYPI_PASSWORD
+   on:
+     tags: true
