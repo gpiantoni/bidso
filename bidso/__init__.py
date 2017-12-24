@@ -7,4 +7,5 @@ from .files import (file_Core,
                     file_Modality,
                     )
 from .directories import (dir_Root,
+                          dir_Subject,
                           )
