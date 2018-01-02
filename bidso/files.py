@@ -10,6 +10,7 @@ class file_Core():
         self.subject = _match(self.filename, 'sub-([a-zA-Z0-9]+)_')
         self.session = _match(self.filename, '_ses-([a-zA-Z0-9]+)_')
         self.run = _match(self.filename, '_run-([a-zA-Z0-9]+)_')
+        self.acq = _match(self.filename, '_acq-([a-zA-Z0-9]+)_')
 
 
 class file_Tsv(file_Core):
