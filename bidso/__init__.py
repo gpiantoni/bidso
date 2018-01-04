@@ -9,3 +9,6 @@ from .files import (file_Core,
 from .directories import (dir_Root,
                           dir_Subject,
                           )
+from .objects import (Task,
+                      Electrodes,
+                     )
