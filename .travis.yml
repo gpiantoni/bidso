@@ -9,6 +9,7 @@ cache:
 
 before_install:
  - git clone -b bep010_ieeg https://github.com/dorahermes/BIDS-examples.git 
+ - mv BIDS-examples/ieeg_visual/sub-01/ses-01/ieeg/sub-01_ses-01_acq-corrected_electrodes.tsv BIDS-examples/ieeg_visual/sub-01/ses-01/ieeg/sub-01_ses-01_acq-projected_electrodes.tsv
 
 install: 
  # install requirements
