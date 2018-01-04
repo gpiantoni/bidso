@@ -17,7 +17,7 @@ setup(
     url='https://github.com/gpiantoni/bidso',
     author="Gio Piantoni",
     author_email='bids@gpiantoni.com',
-    license='GPLv3',
+    license='MIT',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Healthcare Industry',
