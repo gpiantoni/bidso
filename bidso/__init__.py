@@ -11,4 +11,5 @@ from .directories import (dir_Root,
                           )
 from .objects import (Task,
                       Electrodes,
+                      iEEG,
                      )
