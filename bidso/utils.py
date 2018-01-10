@@ -50,15 +50,15 @@ def find_root(filename, pattern='sub-'):
         return find_root(filename.parent)
 
 
-def mkdir_task(base_path, task):
+def bids_mkdir(base_path, file_bids):
 
-    feat_path = base_path / ('sub-' + task.subject)
+    feat_path = base_path / ('sub-' + file_bids.subject)
     feat_path.mkdir(exist_ok=True)
-    if hasattr(task, 'session') and task.session is not None:  # hasattr for pybids, isnone for bidso
-        feat_path = feat_path / ('ses-' + task.session)
+    if file_bids.session is not None:  # hasattr for pybids, isnone for bidso
+        feat_path = feat_path / ('ses-' + file_bids.session)
         feat_path.mkdir(exist_ok=True)
 
-    feat_path = feat_path / task.modality
+    feat_path = feat_path / file_bids.modality
     feat_path.mkdir(exist_ok=True)
 
     return feat_path
