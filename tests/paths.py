@@ -3,3 +3,4 @@ from pathlib import Path
 TEST_PATH = Path(__file__).resolve().parent
 DATA_PATH = TEST_PATH / 'data'
 BIDS_PATH = DATA_PATH / 'bids'
+BIDS_PATH.mkdir(parents=True, exist_ok=True)

@@ -3,12 +3,23 @@ language: python
 python:
  - "3.6"
 
+env:
+  global:
+   - DOWNLOADS=$HOME/downloads
+
 cache: 
  - directories:
+   - $DOWNLOADS
    - $HOME/.cache/pip
 
 before_install:
- - ls
+ - mkdir tests/data/derivatives -p
+ - mkdir $DOWNLOADS
+ - if [ ! -f $DOWNLOADS/freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz ]; then
+    wget -q --directory-prefix=$DOWNLOADS ftp://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/6.0.0/freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz ;
+   fi
+ - tar -C tests/data/derivatives -xf freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz freesurfer/subjects/bert
+ - mv freesurfer/subjects/bert freesurfer/bert
 
 install: 
  # install requirements
