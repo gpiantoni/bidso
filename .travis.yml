@@ -6,6 +6,7 @@ python:
 env:
   global:
    - DOWNLOADS=$HOME/downloads
+   - DERIVATIVES=$HOME/tests/data/derivatives
 
 cache: 
  - directories:
@@ -13,12 +14,12 @@ cache:
    - $HOME/.cache/pip
 
 before_install:
- - mkdir tests/data/derivatives -p
+ - mkdir $DERIVATIVES -p
  - if [ ! -f $DOWNLOADS/freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz ]; then
     wget -q --directory-prefix=$DOWNLOADS ftp://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/6.0.0/freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz ;
    fi
- - tar -C tests/data/derivatives -xf $DOWNLOADS/freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz freesurfer/subjects/bert
- - mv freesurfer/subjects/bert freesurfer/bert
+ - tar -C $DERIVATIVES -xf $DOWNLOADS/freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz freesurfer/subjects/bert
+ - mv $DERIVATIVES/freesurfer/subjects/bert $DERIVATIVES/freesurfer/bert
 
 install: 
  # install requirements
@@ -27,7 +28,7 @@ install:
  - pip install -e .
 
 script:
-    - py.test --cov=bidso tests/
+    - py.test --cov=bidso tests/test_fmri.py
 
 after_success:
  - codecov
