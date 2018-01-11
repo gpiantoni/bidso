@@ -1,4 +1,5 @@
 from bidso import (Task,
+                   Electrodes,
                    )
 
 from bidso.utils import find_root
@@ -29,3 +30,5 @@ def test_directories_xxx():
 
 def test_objects_xxx():
     Task(BIDS_PATH / 'sub-bert/ses-day01/func/sub-bert_ses-day01_task-block_run-00_bold.nii.gz')
+    Electrodes(BIDS_PATH / 'sub-bert/ses-day02/sub-bert_ses-day02_acq-ct_electrodes.tsv')
+

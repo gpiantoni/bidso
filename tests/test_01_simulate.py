@@ -3,6 +3,7 @@ from nibabel import load as nload
 from nibabel import Nifti1Image
 
 from bidso.simulate.fmri import create_bold, create_events
+from bidso.simulate.ieeg import create_electrodes
 from bidso.utils import add_underscore
 from bidso import Task
 
@@ -34,6 +35,15 @@ def test_simulate_root():
         f.write(f'{subject}\t30\tF\n')
 
 
+def test_simulate_ieeg():
+    session = 'day02'
+    modality = 'ieeg'
+    sess_path = BIDS_PATH / f'sub-{subject}/ses-{session}'
+    sess_path.mkdir()
+
+    create_electrodes(sess_path / f'sub-{subject}_ses-{session}_acq-ct_electrodes.tsv')
+
+
 def test_simulate_anat():
 
     mri = nload(str(T1_path))
@@ -41,7 +51,7 @@ def test_simulate_anat():
     nifti = Nifti1Image(x, mri.affine)
 
     anat_path = BIDS_PATH / f'sub-{subject}/ses-{session}/anat/'
-    anat_path.mkdir(parents=True)
+    anat_path.mkdir(exist_ok=True, parents=True)
     nifti.to_filename(str(anat_path / f'sub-{subject}_T1w.nii.gz'))
 
 
