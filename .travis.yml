@@ -20,7 +20,6 @@ before_install:
    fi
  - tar -C $DERIVATIVES -xf $DOWNLOADS/freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz freesurfer/subjects/bert
  - mv $DERIVATIVES/freesurfer/subjects/bert $DERIVATIVES/freesurfer/bert
- - ls -R $PWD/tests/data 
 
 install: 
  # install requirements

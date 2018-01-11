@@ -22,6 +22,15 @@ modality_path.mkdir()
 fmri_file = modality_path / f'sub-{subject}_ses-{session}_task-block_run-00'
 
 
+def test_simulate_root():
+
+    participants_tsv = BIDS_PATH / 'participants.tsv'
+    with participants_tsv.open('w') as f:
+        f.write('participant_id\tage\tsex\n')
+
+        f.write(f'{subject}\t30\tF\n')
+
+
 def test_simulate_fmri():
     mri = nload('tests/data/derivatives/freesurfer/bert/mri/T1.mgz')  # TODO
 
