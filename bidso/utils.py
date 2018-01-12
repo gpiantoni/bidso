@@ -28,10 +28,7 @@ def add_underscore(filename, suffix):
 
 
 def replace_underscore(filename, suffix):
-    if isinstance(filename, str):
-        return '_'.join(filename.split('_')[:-1] + [suffix, ])
-    else:
-        return filename.parent / ('_'.join(filename.name.split('_')[:-1] + [suffix, ]))
+    return add_underscore(remove_underscore(filename), suffix)
 
 
 def remove_underscore(filename):
