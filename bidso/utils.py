@@ -38,15 +38,6 @@ def remove_underscore(filename):
         return filename.parent / ('_'.join(filename.name.split('_')[:-1]))
 
 
-def find_root(filename, pattern='sub-'):
-    """Pattern: 'sub-', 'ses-'"""
-
-    if filename.is_dir() and filename.stem.startswith(pattern):
-        return filename
-    else:
-        return find_root(filename.parent)
-
-
 def bids_mkdir(base_path, file_bids):
 
     output_path = base_path / ('sub-' + file_bids.subject)
