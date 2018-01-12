@@ -9,6 +9,7 @@ from ..utils import replace_extension
 
 def create_bold(mri, bold_file):
     x = mri.get_data()
+    print(x.shape)
     DOWNSAMPLE = 4
 
     af = mri.affine.copy()

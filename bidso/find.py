@@ -12,14 +12,16 @@ def find_root(filename, pattern='sub-'):
         return find_root(filename.parent)
 
 
-def find_modality(dir_name, modality='anat'):
-    """TODO: it should not go deeper than subject"""
+def find_nearest(dir_name, pattern='anat'):
+    """TODO: it should not go deeper than subject
+
+    TODO: how to handle multiple results
+    """
     if not isinstance(dir_name, Path):  # f.e. if it's Task or file_XXX
         dir_name = dir_name.filename.parent
 
-    for one_dir in dir_name.rglob('*'):
-        print(one_dir)
-        if one_dir.name == modality:
-            return one_dir
-    else:
-        return find_modality(dir_name.parent)
+    try:
+        return next(dir_name.rglob(pattern))
+
+    except StopIteration:
+        return find_nearest(dir_name.parent, pattern)

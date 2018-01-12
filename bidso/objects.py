@@ -1,5 +1,6 @@
 from .files import file_Electrodes, file_Core, file_Json, file_Events, file_Channels
 from .utils import replace_extension, replace_underscore
+from .find import find_nearest
 
 
 class Electrodes(file_Core):
@@ -19,4 +20,5 @@ class Task(file_Core):
 class iEEG(Task):
     def __init__(self, filename):
         super().__init__(filename)
-        self.channels = file_Channels(replace_underscore(self.filename, 'channels.tsv'))
+        self.channels = file_Channels(find_nearest(self, '*_channels.tsv'))
+        self.electrodes = Electrodes(find_nearest(self, '*_electrodes.tsv'))

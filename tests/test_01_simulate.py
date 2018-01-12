@@ -1,5 +1,4 @@
 from functools import namedtuple
-from json import dump
 from nibabel import load as nload
 from nibabel import Nifti1Image
 
@@ -52,7 +51,6 @@ def test_simulate_ieeg():
 
 
 def test_simulate_anat():
-
     mri = nload(str(T1_path))
     x = mri.get_data()
     nifti = Nifti1Image(x, mri.affine)
@@ -68,9 +66,6 @@ def test_simulate_fmri():
 
     create_bold(mri, add_underscore(fmri_file, 'bold.nii.gz'))
     create_events(add_underscore(fmri_file, 'events.tsv'))
-
-    with add_underscore(fmri_file, 'bold.nii.gz').open('w') as f:
-        dump({}, f, indent=' ')
 
 
 def test_read_fmri():
