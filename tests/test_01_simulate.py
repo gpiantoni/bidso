@@ -3,9 +3,13 @@ from nibabel import load as nload
 from nibabel import Nifti1Image
 
 from bidso.simulate.fmri import create_bold, create_events
-from bidso.simulate.ieeg import create_electrodes
-from bidso.utils import add_underscore
-from bidso import Task
+from bidso.simulate.ieeg import (create_electrodes,
+                                 create_channels,
+                                 create_ieeg_info,
+                                 create_ieeg_data,
+                                 )
+from bidso.utils import add_underscore, replace_underscore, replace_extension
+from bidso import Task, Electrodes
 
 from .paths import BIDS_PATH, FREESURFER_PATH
 
@@ -14,7 +18,7 @@ session = 'day01'
 modality = 'func'
 
 subj_path = BIDS_PATH / f'sub-{subject}'
-subj_path.mkdir()
+subj_path.mkdir(exist_ok=True)  # necessary when folders are not removed cleanly
 
 sess_path = subj_path / f'ses-{session}'
 sess_path.mkdir()
@@ -39,9 +43,24 @@ def test_simulate_ieeg():
     session = 'day02'
     modality = 'ieeg'
     sess_path = BIDS_PATH / f'sub-{subject}/ses-{session}'
-    sess_path.mkdir()
+    sess_path.mkdir(exist_ok=True)
 
-    create_electrodes(sess_path / f'sub-{subject}_ses-{session}_acq-ct_electrodes.tsv')
+    elec_file = sess_path / f'sub-{subject}_ses-{session}_acq-ct_electrodes.tsv'
+    create_electrodes(elec_file)
+
+    modality_path = sess_path / f'{modality}'
+    modality_path.mkdir(exist_ok=True)
+
+    base_file = modality_path / f'sub-{subject}_ses-{session}_task-block_run-00'
+    create_events(add_underscore(base_file, 'events.tsv'))
+
+    ieeg_file = add_underscore(base_file, modality + '.bin')
+    elec = Electrodes(elec_file)
+    n_elec = len(elec.electrodes.tsv)
+    create_ieeg_data(ieeg_file, n_elec)
+
+    create_ieeg_info(replace_extension(ieeg_file, '.json'))
+    create_channels(replace_underscore(ieeg_file, 'channels.tsv'), elec)
 
 
 def test_simulate_anat():
