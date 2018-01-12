@@ -1,5 +1,5 @@
-from .files import file_Electrodes, file_Core, file_Json, file_Events, file_Tsv
-from .utils import replace_extension, replace_underscore, _match
+from .files import file_Electrodes, file_Core, file_Json, file_Events, file_Channels
+from .utils import replace_extension, replace_underscore
 
 
 class Electrodes(file_Core):
@@ -19,4 +19,4 @@ class Task(file_Core):
 class iEEG(Task):
     def __init__(self, filename):
         super().__init__(filename)
-        self.channels = file_Tsv(replace_underscore(self.filename, 'channels.tsv'))
+        self.channels = file_Channels(replace_underscore(self.filename, 'channels.tsv'))

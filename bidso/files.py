@@ -1,7 +1,7 @@
 from json import load as json_load
 from pathlib import Path
 
-from .utils import _match
+from .utils import read_tsv, _match
 
 
 class file_Core():
@@ -19,7 +19,7 @@ class file_Core():
 class file_Tsv(file_Core):
     def __init__(self, filename):
         super().__init__(filename)
-        self.tsv = _read_tsv(self.filename)
+        self.tsv = read_tsv(self.filename)
 
 
 class file_Json(file_Core):
@@ -42,18 +42,3 @@ class file_Events(file_Tsv):
 class file_Electrodes(file_Tsv):
     def __init__(self, filename):
         super().__init__(filename)
-
-
-class file_Modality(file_Json):
-    def __init__(self, filename):
-        super().__init__(filename)
-
-
-def _read_tsv(filename):
-    with filename.open() as f:
-        hdr = f.readline()
-        tsv = []
-        for l in f:
-            d = {k.strip(): v.strip() for k, v in zip(hdr.split('\t'), l.split('\t'))}
-            tsv.append(d)
-    return tsv

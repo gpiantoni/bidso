@@ -1,12 +1,10 @@
 from bidso import (Task,
-                   Electrodes,
+                   iEEG,
                    )
 
 from bidso.utils import find_root
 
 from bidso.files import (file_Json,
-                         file_Events,
-                         file_Modality,
                          )
 
 from bidso.directories import (dir_Root,
@@ -30,5 +28,4 @@ def test_directories_xxx():
 
 def test_objects_xxx():
     Task(BIDS_PATH / 'sub-bert/ses-day01/func/sub-bert_ses-day01_task-block_run-00_bold.nii.gz')
-    Electrodes(BIDS_PATH / 'sub-bert/ses-day02/sub-bert_ses-day02_acq-ct_electrodes.tsv')
-
+    iEEG(BIDS_PATH / 'sub-bert/ses-day02/ieeg/sub-bert_ses-day02_task-block_run-00_ieeg.bin')

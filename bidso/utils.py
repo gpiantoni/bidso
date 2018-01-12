@@ -52,16 +52,16 @@ def find_root(filename, pattern='sub-'):
 
 def bids_mkdir(base_path, file_bids):
 
-    feat_path = base_path / ('sub-' + file_bids.subject)
-    feat_path.mkdir(exist_ok=True)
+    output_path = base_path / ('sub-' + file_bids.subject)
+    output_path.mkdir(exist_ok=True)
     if file_bids.session is not None:  # hasattr for pybids, isnone for bidso
-        feat_path = feat_path / ('ses-' + file_bids.session)
-        feat_path.mkdir(exist_ok=True)
+        output_path = output_path / ('ses-' + file_bids.session)
+        output_path.mkdir(exist_ok=True)
 
-    feat_path = feat_path / file_bids.modality
-    feat_path.mkdir(exist_ok=True)
+    output_path = output_path / file_bids.modality
+    output_path.mkdir(exist_ok=True)
 
-    return feat_path
+    return output_path
 
 
 def _match(filename, pattern):

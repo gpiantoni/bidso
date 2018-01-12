@@ -23,7 +23,7 @@ def create_electrodes(output_file):
 
     coordframe_file = replace_underscore(output_file, 'coordframe.json')
     with coordframe_file.open('w') as f:
-        dump({}, f)
+        dump({}, f, indent=' ')
 
 
 def create_ieeg_data(output_file, n_elec):
@@ -76,4 +76,4 @@ def create_ieeg_info(output_file):
     }
 
     with output_file.open('w') as f:
-        dump(dataset_info, f)
+        dump(dataset_info, f, indent=' ')
