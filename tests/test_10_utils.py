@@ -7,6 +7,3 @@ def test_replace_extension():
 
 def test_replace_underscore():
     assert replace_underscore('file_mod.txt', 'dat.txt') == 'file_dat.txt'
-
-
-

@@ -32,18 +32,17 @@ def test_simulate_root():
 
 
 def test_simulate_ieeg():
-    modality = 'ieeg'
+    modality_path = bids_mkdir(BIDS_PATH, task_ieeg)
+
     sess_path = BIDS_PATH / f'sub-{subject}/ses-{task_ieeg.session}'
-    sess_path.mkdir(exist_ok=True)
 
     elec_file = sess_path / f'sub-{subject}_ses-{task_ieeg.session}_acq-ct_electrodes.tsv'
     create_electrodes(elec_file)
 
-    modality_path = bids_mkdir(BIDS_PATH, task_ieeg)
     base_file = modality_path / f'sub-{subject}_ses-{task_ieeg.session}_task-block_run-00'
     create_events(add_underscore(base_file, 'events.tsv'))
 
-    ieeg_file = add_underscore(base_file, modality + '.bin')
+    ieeg_file = add_underscore(base_file, task_ieeg.modality + '.bin')
     elec = Electrodes(elec_file)
     n_elec = len(elec.electrodes.tsv)
     create_ieeg_data(ieeg_file, n_elec)

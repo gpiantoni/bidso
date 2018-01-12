@@ -6,21 +6,21 @@ python:
 env:
   global:
    - DOWNLOADS=$HOME/downloads
+   - CACHE=$HOME/cache
    - DERIVATIVES=tests/data/derivatives
 
 cache: 
  - directories:
-   - $DOWNLOADS
+   - $CACHE
    - $HOME/.cache/pip
 
 before_install:
- - ls $DOWNLOADS
- - mkdir $DERIVATIVES -p
- - if [ ! -f $DOWNLOADS/freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz ]; then
+ - mkdir $DERIVATIVES/freesurfer -p
+ - if [ ! -d $CACHE/freesurfer ]; then
     wget -q --directory-prefix=$DOWNLOADS ftp://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/6.0.0/freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz ;
+    tar -C $CACHE -xf $DOWNLOADS/freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz freesurfer/subjects/bert ;
    fi
- - tar -C $DERIVATIVES -xf $DOWNLOADS/freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz freesurfer/subjects/bert
- - mv $DERIVATIVES/freesurfer/subjects/bert $DERIVATIVES/freesurfer/bert
+ - cp $CACHE/freesurfer/subjects/bert $DERIVATIVES/freesurfer/bert -r
 
 install: 
  # install requirements
