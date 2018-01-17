@@ -5,7 +5,21 @@ lg = getLogger(__name__)
 
 
 def find_root(filename, target='bids'):
-    """Target: 'bids', 'subject', 'session'
+    """Find base directory (root) for a filename.
+
+    Parameters
+    ----------
+    filename : instance of Path
+        search the root for this file
+    target: str
+        'bids' (the directory containing 'participants.tsv'), 'subject' (the
+        directory starting with 'sub-'), 'session' (the directory starting with
+        'ses-')
+
+    Returns
+    -------
+    instance of Path
+        path of the target directory
     """
     lg.debug(f'Searching root in {filename}')
     if target == 'bids' and (filename / 'participants.tsv').exists():
@@ -16,6 +30,32 @@ def find_root(filename, target='bids'):
             return filename
 
     return find_root(filename.parent, target)
+
+
+def find_nearest(filename, pattern=None, **kwargs):
+    """Find nearest file matching some criteria.
+
+    Parameters
+    ----------
+    filename : instance of Path
+        search the root for this file
+    """
+    lg.debug(f'Searching nearest in {filename}')
+
+    if pattern is None:
+        pattern = _generate_pattern(kwargs)
+
+    if filename == find_root(filename):
+        raise FileNotFoundError(f'Could not find file matchting {pattern} in {filename}')
+
+    matches = list(filename.rglob(pattern))
+    if len(matches) == 1:
+        return matches[0]
+    elif len(matches) == 0:
+        return find_nearest(filename.parent, pattern)
+    else:
+        matches_str = '"\n\t"'.join(str(x) for x in matches)
+        raise FileNotFoundError(f'Multiple files matching "{pattern}":\n\t"{matches_str}"')
 
 
 def _generate_pattern(kwargs):
@@ -41,20 +81,3 @@ def _generate_pattern(kwargs):
     return pattern
 
 
-def find_nearest(dir_name, pattern=None, **kwargs):
-    lg.debug(f'Searching nearest in {dir_name}')
-
-    if pattern is None:
-        pattern = _generate_pattern(kwargs)
-
-    if dir_name == find_root(dir_name):
-        raise FileNotFoundError(f'Could not find file matchting {pattern} in {dir_name}')
-
-    matches = list(dir_name.rglob(pattern))
-    if len(matches) == 1:
-        return matches[0]
-    elif len(matches) == 0:
-        return find_nearest(dir_name.parent, pattern)
-    else:
-        matches_str = '"\n\t"'.join(str(x) for x in matches)
-        raise FileNotFoundError(f'Multiple files matching "{pattern}":\n\t"{matches_str}"')

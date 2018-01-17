@@ -20,7 +20,7 @@ before_install:
     wget -q --directory-prefix=$DOWNLOADS ftp://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/6.0.0/freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz ;
     tar -C $CACHE -xf $DOWNLOADS/freesurfer-Linux-centos6_x86_64-stable-pub-v6.0.0.tar.gz freesurfer/subjects/bert ;
    fi
- - cp $CACHE/freesurfer/subjects/bert $DERIVATIVES/freesurfer/bert -r
+ - cp $CACHE/freesurfer/subjects/bert $DERIVATIVES/freesurfer/sub-bert -r
 
 install: 
  # install requirements
