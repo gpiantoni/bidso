@@ -18,4 +18,4 @@ task_fmri = TaskSimple(subject, 'day01', 'func', 'block', '00')
 task_anat = TaskSimple(subject, 'day01', 'anat', 'block', '00')
 task_ieeg = TaskSimple(subject, 'day02', 'ieeg', 'block', '00')
 
-T1_PATH = FREESURFER_PATH / 'bert/mri/T1.mgz'
+T1_PATH = FREESURFER_PATH / 'sub-bert/mri/T1.mgz'

@@ -20,5 +20,5 @@ class Task(file_Core):
 class iEEG(Task):
     def __init__(self, filename, electrodes='*'):
         super().__init__(filename)
-        self.channels = file_Channels(find_nearest(self, '*_channels.tsv'))
-        self.electrodes = Electrodes(find_nearest(self, electrodes + '_electrodes.tsv'))
+        self.channels = file_Channels(find_nearest(self.filename, '*_channels.tsv'))
+        self.electrodes = Electrodes(find_nearest(self.filename, electrodes + '_electrodes.tsv'))
