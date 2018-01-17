@@ -30,7 +30,7 @@ def test_simulate_ieeg():
     elec_file = sess_path / f'sub-{task_ieeg.subject}_ses-{task_ieeg.session}_acq-ct_electrodes.tsv'
     create_electrodes(elec_file)
 
-    base_file = modality_path / f'sub-{task_ieeg.subject}_ses-{task_ieeg.session}_task-block_run-00'
+    base_file = modality_path / f'sub-{task_ieeg.subject}_ses-{task_ieeg.session}_task-{task_ieeg.task}_run-{task_ieeg.run}'
     create_events(add_underscore(base_file, 'events.tsv'))
 
     ieeg_file = add_underscore(base_file, task_ieeg.modality + '.bin')
@@ -53,7 +53,7 @@ def test_simulate_anat():
 
 def test_simulate_fmri():
     modality_path = bids_mkdir(BIDS_PATH, task_fmri)
-    fmri_file = modality_path / f'sub-{task_fmri.subject}_ses-{task_fmri.session}_task-block_run-00'
+    fmri_file = modality_path / f'sub-{task_fmri.subject}_ses-{task_fmri.session}_task-{task_ieeg.task}_run-{task_ieeg.run}'
     mri = nload(str(T1_PATH))
 
     create_bold(mri, add_underscore(fmri_file, 'bold.nii.gz'))
