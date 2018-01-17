@@ -1,4 +1,3 @@
-from functools import namedtuple
 from nibabel import load as nload
 from nibabel import Nifti1Image
 
@@ -11,14 +10,7 @@ from bidso.simulate.ieeg import (create_electrodes,
 from bidso.utils import add_underscore, replace_underscore, replace_extension, bids_mkdir
 from bidso import Task, Electrodes
 
-from .paths import BIDS_PATH, FREESURFER_PATH
-
-subject = 'bert'
-task_fmri = namedtuple('BIDS', ('subject', 'session', 'modality'))(subject, 'day01', 'func')
-task_anat = namedtuple('BIDS', ('subject', 'session', 'modality'))(subject, 'day01', 'anat')
-task_ieeg = namedtuple('BIDS', ('subject', 'session', 'modality'))(subject, 'day02', 'ieeg')
-
-T1_path = FREESURFER_PATH / 'bert/mri/T1.mgz'
+from .paths import BIDS_PATH, T1_PATH, task_ieeg, task_fmri, task_anat
 
 
 def test_simulate_root():
@@ -27,18 +19,18 @@ def test_simulate_root():
     with participants_tsv.open('w') as f:
         f.write('participant_id\tage\tsex\n')
 
-        f.write(f'{subject}\t30\tF\n')
+        f.write(f'{task_ieeg.subject}\t30\tF\n')
 
 
 def test_simulate_ieeg():
     modality_path = bids_mkdir(BIDS_PATH, task_ieeg)
 
-    sess_path = BIDS_PATH / f'sub-{subject}/ses-{task_ieeg.session}'
+    sess_path = BIDS_PATH / f'sub-{task_ieeg.subject}/ses-{task_ieeg.session}'
 
-    elec_file = sess_path / f'sub-{subject}_ses-{task_ieeg.session}_acq-ct_electrodes.tsv'
+    elec_file = sess_path / f'sub-{task_ieeg.subject}_ses-{task_ieeg.session}_acq-ct_electrodes.tsv'
     create_electrodes(elec_file)
 
-    base_file = modality_path / f'sub-{subject}_ses-{task_ieeg.session}_task-block_run-00'
+    base_file = modality_path / f'sub-{task_ieeg.subject}_ses-{task_ieeg.session}_task-block_run-00'
     create_events(add_underscore(base_file, 'events.tsv'))
 
     ieeg_file = add_underscore(base_file, task_ieeg.modality + '.bin')
@@ -51,18 +43,18 @@ def test_simulate_ieeg():
 
 
 def test_simulate_anat():
-    mri = nload(str(T1_path))
+    mri = nload(str(T1_PATH))
     x = mri.get_data()
     nifti = Nifti1Image(x, mri.affine)
 
     anat_path = bids_mkdir(BIDS_PATH, task_anat)
-    nifti.to_filename(str(anat_path / f'sub-{subject}_T1w.nii.gz'))
+    nifti.to_filename(str(anat_path / f'sub-{task_anat.subject}_T1w.nii.gz'))
 
 
 def test_simulate_fmri():
     modality_path = bids_mkdir(BIDS_PATH, task_fmri)
-    fmri_file = modality_path / f'sub-{subject}_ses-{task_fmri.session}_task-block_run-00'
-    mri = nload(str(T1_path))
+    fmri_file = modality_path / f'sub-{task_fmri.subject}_ses-{task_fmri.session}_task-block_run-00'
+    mri = nload(str(T1_PATH))
 
     create_bold(mri, add_underscore(fmri_file, 'bold.nii.gz'))
     create_events(add_underscore(fmri_file, 'events.tsv'))
@@ -70,6 +62,6 @@ def test_simulate_fmri():
 
 def test_read_fmri():
     modality_path = bids_mkdir(BIDS_PATH, task_fmri)
-    fmri_file = modality_path / f'sub-{subject}_ses-{task_fmri.session}_task-block_run-00'
+    fmri_file = modality_path / f'sub-{task_fmri.subject}_ses-{task_fmri.session}_task-block_run-00'
 
     Task(add_underscore(fmri_file, 'bold.nii.gz'))
