@@ -30,6 +30,31 @@ class file_Core():
                 else:
                     raise KeyError(f'"{k}" is not an attribute of file_Core')
 
+    def get_filename(self, base_dir=None):
+
+        filename = 'sub-' + self.subject
+        if self.session is not None:
+            filename += '_ses-' + self.session
+        if self.task is not None:
+            filename += '_task-' + self.task
+        if self.run is not None:
+            filename += '_run-' + self.run
+        if self.acquisition is not None:
+            filename += '_acq-' + self.acquisition
+        if self.modality is not None:
+            filename += '_' + self.modality
+
+        if base_dir is None:
+            return filename
+
+        else:
+            dir_name = base_dir / ('sub-' + self.subject)
+            if self.session is not None:
+                dir_name /= 'ses-' + self.session
+            if self.modality is not None:
+                dir_name /= self.modality
+            return dir_name / filename
+
 
 class file_Tsv(file_Core):
     def __init__(self, filename):
