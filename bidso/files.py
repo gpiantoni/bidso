@@ -1,7 +1,7 @@
 from json import load as json_load
 from pathlib import Path
 
-from .utils import read_tsv, _match, find_extension
+from .utils import read_tsv, _match, find_extension, _add_modality
 
 
 class file_Core():
@@ -55,12 +55,7 @@ class file_Core():
             dir_name = base_dir / ('sub-' + self.subject)
             if self.session is not None:
                 dir_name /= 'ses-' + self.session
-            if self.modality is not None and self.modality not in ('electrodes', 'events'):
-                if self.modality == 'bold':  # TODO: there are many other ones
-                    modality = 'func'
-                else:
-                    modality = self.modality
-                dir_name /= modality
+            dir_name = _add_modality(dir_name, self.modality)
 
             return dir_name / filename
 

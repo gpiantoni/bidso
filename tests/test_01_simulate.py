@@ -28,10 +28,9 @@ def test_simulate_ieeg():
     elec_file = elec_ct.get_filename(BIDS_PATH)
     create_electrodes(elec_file)
 
-    base_file = modality_path / task_ieeg.get_filename()
-    create_events(replace_underscore(base_file, 'events.tsv'))
+    ieeg_file = modality_path / task_ieeg.get_filename()
+    create_events(replace_underscore(ieeg_file, 'events.tsv'))
 
-    ieeg_file = add_underscore(base_file, task_ieeg.modality + '.bin')
     elec = Electrodes(elec_file)
     n_elec = len(elec.electrodes.tsv)
     create_ieeg_data(ieeg_file, n_elec)

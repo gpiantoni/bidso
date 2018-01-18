@@ -20,11 +20,22 @@ def find_extension(filename):
     return '.'.join(filename.split('.')[1:])
 
 
-def replace_extension(filename, suffix):
+def add_extension(filename, suffix):
     if isinstance(filename, str):
-        return filename.split('.')[0] + suffix
+        return filename + suffix
     else:
-        return filename.parent / (filename.name.split('.')[0] + suffix)
+        return filename.parent / (filename.name + suffix)
+
+
+def replace_extension(filename, suffix):
+    add_extension(remove_extension(filename), suffix)
+
+
+def remove_extension(filename):
+    if isinstance(filename, str):
+        return filename.split('.')[0]
+    else:
+        return filename.parent / filename.name.split('.')[0]
 
 
 def add_underscore(filename, suffix):
@@ -53,10 +64,24 @@ def bids_mkdir(base_path, file_bids):
         output_path = output_path / ('ses-' + file_bids.session)
         output_path.mkdir(exist_ok=True)
 
-    output_path = output_path / file_bids.modality
+    output_path = add_modality(output_path, file_bids.modality)
     output_path.mkdir(exist_ok=True)
 
     return output_path
+
+
+def add_modality(output_path, modality):
+    """Modality can be appended to the file name (such as 'bold') or use in the
+    folder (such as "func"). You should always use the specific modality ('bold').
+    This function converts it to the folder name.
+    """
+    if modality is None or modality in ('electrodes', 'events'):
+        return output_path
+    else:
+        if modality == 'bold':  # TODO: there are many other ones
+            modality = 'func'
+
+        return output_path / modality
 
 
 def _match(filename, pattern):
