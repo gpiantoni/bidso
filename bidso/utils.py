@@ -13,6 +13,13 @@ def read_tsv(filename):
     return tsv
 
 
+def find_extension(filename):
+    if isinstance(filename, Path):
+        filename = filename.name
+
+    return '.'.join(filename.split('.')[1:])
+
+
 def replace_extension(filename, suffix):
     if isinstance(filename, str):
         return filename.split('.')[0] + suffix

@@ -20,12 +20,20 @@ task_ieeg = file_Core(
 task_fmri = file_Core(
     subject=subject,
     session='day01',
-    modality='func',
+    modality='bold',
     task='block',
     run='00')
 task_anat = file_Core(
     subject=subject,
     session='day01',
-    modality='anat')
+    modality='anat',
+    )
+elec_ct = file_Core(
+    subject=subject,
+    session='day02',
+    modality='electrodes',
+    extension='.tsv',
+    )
+
 
 T1_PATH = FREESURFER_PATH / 'sub-bert/mri/T1.mgz'

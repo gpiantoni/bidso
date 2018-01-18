@@ -1,7 +1,7 @@
 from json import load as json_load
 from pathlib import Path
 
-from .utils import read_tsv, _match
+from .utils import read_tsv, _match, find_extension
 
 
 class file_Core():
@@ -12,6 +12,7 @@ class file_Core():
     run = None
     acquisition = None
     task = None
+    extension = None
 
     def __init__(self, filename=None, **kwargs):
         if filename is not None:
@@ -20,8 +21,9 @@ class file_Core():
             self.session = _match(self.filename, '_ses-([a-zA-Z0-9\-]+)_')
             self.modality = self.filename.parent.name
             self.run = _match(self.filename, '_run-([a-zA-Z0-9\-]+)_')
-            self.acq = _match(self.filename, '_acq-([a-zA-Z0-9\-]+)_')
+            self.acquisition = _match(self.filename, '_acq-([a-zA-Z0-9\-]+)_')
             self.task = _match(self.filename, '_task-([a-zA-Z0-9\-]+)_')
+            self.extension = find_extension(self.filename)
 
         else:
             for k, v in kwargs.items():
@@ -43,6 +45,8 @@ class file_Core():
             filename += '_acq-' + self.acquisition
         if self.modality is not None:
             filename += '_' + self.modality
+        if self.extension is not None:
+            filename += self.extension
 
         if base_dir is None:
             return filename
@@ -51,8 +55,13 @@ class file_Core():
             dir_name = base_dir / ('sub-' + self.subject)
             if self.session is not None:
                 dir_name /= 'ses-' + self.session
-            if self.modality is not None:
-                dir_name /= self.modality
+            if self.modality is not None and self.modality not in ('electrodes', 'events'):
+                if self.modality == 'bold':  # TODO: there are many other ones
+                    modality = 'func'
+                else:
+                    modality = self.modality
+                dir_name /= modality
+
             return dir_name / filename
 
 

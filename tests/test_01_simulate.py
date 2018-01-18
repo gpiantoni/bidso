@@ -10,7 +10,7 @@ from bidso.simulate.ieeg import (create_electrodes,
 from bidso.utils import add_underscore, replace_underscore, replace_extension, bids_mkdir
 from bidso import Task, Electrodes
 
-from .paths import BIDS_PATH, T1_PATH, task_ieeg, task_fmri, task_anat
+from .paths import BIDS_PATH, T1_PATH, task_ieeg, task_fmri, task_anat, elec_ct
 
 
 def test_simulate_root():
@@ -25,13 +25,11 @@ def test_simulate_root():
 def test_simulate_ieeg():
     modality_path = bids_mkdir(BIDS_PATH, task_ieeg)
 
-    sess_path = BIDS_PATH / f'sub-{task_ieeg.subject}/ses-{task_ieeg.session}'
-
-    elec_file = sess_path / f'sub-{task_ieeg.subject}_ses-{task_ieeg.session}_acq-ct_electrodes.tsv'
+    elec_file = elec_ct.get_filename(BIDS_PATH)
     create_electrodes(elec_file)
 
-    base_file = modality_path / f'sub-{task_ieeg.subject}_ses-{task_ieeg.session}_task-{task_ieeg.task}_run-{task_ieeg.run}'
-    create_events(add_underscore(base_file, 'events.tsv'))
+    base_file = modality_path / task_ieeg.get_filename()
+    create_events(replace_underscore(base_file, 'events.tsv'))
 
     ieeg_file = add_underscore(base_file, task_ieeg.modality + '.bin')
     elec = Electrodes(elec_file)
