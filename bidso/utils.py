@@ -28,7 +28,7 @@ def add_extension(filename, suffix):
 
 
 def replace_extension(filename, suffix):
-    add_extension(remove_extension(filename), suffix)
+    return add_extension(remove_extension(filename), suffix)
 
 
 def remove_extension(filename):

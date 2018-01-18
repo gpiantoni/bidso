@@ -1,7 +1,7 @@
 from json import load as json_load
 from pathlib import Path
 
-from .utils import read_tsv, _match, find_extension, _add_modality
+from .utils import read_tsv, _match, find_extension, add_modality, remove_extension
 
 
 class file_Core():
@@ -19,7 +19,7 @@ class file_Core():
             self.filename = Path(filename)
             self.subject = _match(self.filename, 'sub-([a-zA-Z0-9\-]+)_')
             self.session = _match(self.filename, '_ses-([a-zA-Z0-9\-]+)_')
-            self.modality = self.filename.parent.name
+            self.modality = remove_extension(self.filename.name).split('_')[-1]
             self.run = _match(self.filename, '_run-([a-zA-Z0-9\-]+)_')
             self.acquisition = _match(self.filename, '_acq-([a-zA-Z0-9\-]+)_')
             self.task = _match(self.filename, '_task-([a-zA-Z0-9\-]+)_')
@@ -55,7 +55,7 @@ class file_Core():
             dir_name = base_dir / ('sub-' + self.subject)
             if self.session is not None:
                 dir_name /= 'ses-' + self.session
-            dir_name = _add_modality(dir_name, self.modality)
+            dir_name = add_modality(dir_name, self.modality)
 
             return dir_name / filename
 
