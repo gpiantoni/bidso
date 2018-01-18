@@ -49,12 +49,12 @@ def test_simulate_anat():
 
 
 def test_simulate_fmri():
-    modality_path = bids_mkdir(BIDS_PATH, task_fmri)
-    fmri_file = modality_path / f'sub-{task_fmri.subject}_ses-{task_fmri.session}_task-{task_ieeg.task}_run-{task_ieeg.run}'
+    bids_mkdir(BIDS_PATH, task_fmri)
     mri = nload(str(T1_PATH))
 
-    create_bold(mri, add_underscore(fmri_file, 'bold.nii.gz'))
-    create_events(add_underscore(fmri_file, 'events.tsv'))
+    fmri_file = task_fmri.get_filename(BIDS_PATH)
+    create_bold(mri, fmri_file)
+    create_events(replace_underscore(fmri_file, 'events.tsv'))
 
 
 def test_read_fmri():

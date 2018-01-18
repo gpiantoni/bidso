@@ -78,6 +78,9 @@ def add_modality(output_path, modality):
     if modality is None or modality in ('electrodes', 'events'):
         return output_path
     else:
+        if modality == 'T1w':  # TODO: there are many other ones
+            modality = 'anat'
+
         if modality == 'bold':  # TODO: there are many other ones
             modality = 'func'
 
