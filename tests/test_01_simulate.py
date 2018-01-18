@@ -7,7 +7,7 @@ from bidso.simulate.ieeg import (create_electrodes,
                                  create_ieeg_info,
                                  create_ieeg_data,
                                  )
-from bidso.utils import add_underscore, replace_underscore, replace_extension, bids_mkdir
+from bidso.utils import replace_underscore, replace_extension, bids_mkdir
 from bidso import Task, Electrodes
 
 from .paths import BIDS_PATH, T1_PATH, task_ieeg, task_fmri, task_anat, elec_ct
@@ -58,7 +58,4 @@ def test_simulate_fmri():
 
 
 def test_read_fmri():
-    modality_path = bids_mkdir(BIDS_PATH, task_fmri)
-    fmri_file = modality_path / f'sub-{task_fmri.subject}_ses-{task_fmri.session}_task-block_run-00'
-
-    Task(add_underscore(fmri_file, 'bold.nii.gz'))
+    Task(task_fmri.get_filename(BIDS_PATH))
