@@ -14,7 +14,6 @@ import bidso
 
 # -- General configuration ------------------------------------------------
 extensions = [
-    'sphinx.ext.autosummary',
     'sphinx.ext.autodoc',
     'sphinx.ext.githubpages',
     'sphinx.ext.napoleon',
@@ -22,8 +21,11 @@ extensions = [
     'sphinx.ext.viewcode',
     ]
 
+exclude_patterns = [
+    'api/bidso.rst',
+    ]
+
 # autodoc options
-autosummary_generate = True
 autodoc_default_flags = []
 
 # Napoleon settings
@@ -75,7 +77,7 @@ def run_apidoc(_):
     from sphinx.apidoc import main
     output_path = join(cur_dir, 'api')
     # here use paths relative to docs/source
-    main(['', '-f', '-e', '-o', output_path, '../../bidso'])
+    main(['', '-fMeT', '-o', output_path, '../../bidso'])
 
 def setup(app):
     app.connect('builder-inited', run_apidoc)

@@ -8,7 +8,7 @@ Contents:
 
    introduction
    installation
-   Modules, classes, functions<api/bidso>
+   api
    todo
 
 

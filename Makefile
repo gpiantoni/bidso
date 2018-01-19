@@ -20,5 +20,3 @@ clean:
 	rm $(API_PATH) -fr
 	rm $(BIDS_PATH) -fr 
 	rm $(COV_PATH) -fr 
-	rm .coverage
-
