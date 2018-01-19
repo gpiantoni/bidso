@@ -1,6 +1,5 @@
 from json import dump
-from numpy import NaN, ones, r_, stack
-from numpy.random import random, seed
+from numpy import NaN, ones, r_, stack, random
 
 from nibabel import Nifti1Image
 from nibabel import load as nload
@@ -9,7 +8,7 @@ from ..objects import Task
 from ..utils import replace_extension, replace_underscore, bids_mkdir
 
 
-def simulate_bold(task_fmri, root, t1):
+def simulate_bold(root, task_fmri, t1):
     bids_mkdir(root, task_fmri)
     mri = nload(str(t1))
 
@@ -35,8 +34,8 @@ def create_bold(mri, bold_file):
     SHIFT = 3
     bold = (xm[:, :, :, None] + r_[ones(SHIFT), ones(16) * 5, ones(16), ones(16) * 5, ones(16), ones(16) * 5, ones(16 - SHIFT)])
 
-    seed(100)
-    bold += random(bold.shape) * 2
+    random.seed(100)
+    bold += random.random(bold.shape) * 2
     nifti = Nifti1Image(bold.astype('float32'), af)
     nifti.header['pixdim'][4] = 2.   # TR
     nifti.to_filename(str(bold_file))

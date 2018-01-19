@@ -71,18 +71,3 @@ class file_Json(file_Core):
         super().__init__(filename)
         with self.filename.open() as f:
             self.json = json_load(f)
-
-
-class file_Channels(file_Tsv):
-    def __init__(self, filename):
-        super().__init__(filename)
-
-
-class file_Events(file_Tsv):
-    def __init__(self, filename):
-        super().__init__(filename)
-
-
-class file_Electrodes(file_Tsv):
-    def __init__(self, filename):
-        super().__init__(filename)

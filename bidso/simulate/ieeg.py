@@ -2,7 +2,7 @@ from shutil import copyfile
 from json import dump
 from pathlib import Path
 from numpy import ones, memmap, r_
-from numpy.random import seed, random
+from numpy import random
 
 
 from ..objects import Electrodes, iEEG
@@ -52,9 +52,9 @@ def create_ieeg_data(output_file, n_elec):
 
     n_chan = n_elec + len(EXTRA_CHANS)
 
-    seed(100)
+    random.seed(100)
     t = r_[ones(block_dur * sf) * EFFECT_SIZE, ones(block_dur * sf), ones(block_dur * sf) * EFFECT_SIZE, ones(block_dur * sf), ones(block_dur * sf) * EFFECT_SIZE, ones(block_dur * sf)]
-    data = random((n_chan, sf * dur)) * t[None, :]
+    data = random.random((n_chan, sf * dur)) * t[None, :]
 
     dtype = 'float64'
     memshape = (n_chan, sf * dur)
