@@ -34,9 +34,9 @@ install:
 
 script:
  - py.test --cov=bidso tests
+ - sphinx-build -T -b html -d $BUILD_PATH/doctrees $SOURCE_PATH $HTML_PATH
 
 after_success:
- - sphinx-build -T -b html -d $(BUILD_PATH)/doctrees $(SOURCE_PATH) $(HTML_PATH)
  - codecov
 
 notifications:
