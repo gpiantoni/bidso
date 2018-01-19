@@ -7,6 +7,7 @@ from bidso.simulate.ieeg import (create_electrodes,
                                  create_ieeg_info,
                                  create_ieeg_data,
                                  )
+from bidso.simulate import simulate_bold
 from bidso.utils import replace_underscore, replace_extension, bids_mkdir
 from bidso import Task, Electrodes
 
@@ -49,12 +50,7 @@ def test_simulate_anat():
 
 
 def test_simulate_fmri():
-    bids_mkdir(BIDS_PATH, task_fmri)
-    mri = nload(str(T1_PATH))
-
-    fmri_file = task_fmri.get_filename(BIDS_PATH)
-    create_bold(mri, fmri_file)
-    create_events(replace_underscore(fmri_file, 'events.tsv'))
+    simulate_bold(task_fmri, BIDS_PATH, T1_PATH)
 
 
 def test_read_fmri():

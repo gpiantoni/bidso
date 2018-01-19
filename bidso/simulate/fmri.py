@@ -3,8 +3,18 @@ from numpy import NaN, ones, r_, stack
 from numpy.random import random, seed
 
 from nibabel import Nifti1Image
+from nibabel import load as nload
 
-from ..utils import replace_extension
+from ..utils import replace_extension, replace_underscore, bids_mkdir
+
+
+def simulate_bold(task_fmri, root, t1):
+    bids_mkdir(root, task_fmri)
+    mri = nload(str(t1))
+
+    fmri_file = task_fmri.get_filename(root)
+    create_bold(mri, fmri_file)
+    create_events(replace_underscore(fmri_file, 'events.tsv'))
 
 
 def create_bold(mri, bold_file):

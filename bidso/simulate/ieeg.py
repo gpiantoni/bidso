@@ -17,6 +17,10 @@ block_dur = 32
 EXTRA_CHANS = ('EOG1', 'EOG2', 'ECG', 'EMG', 'other')
 
 
+def simulate_ieeg(root, ieeg_task):
+    pass
+
+
 def create_electrodes(output_file):
     electrodes_file = DATA_PATH / 'electrodes.tsv'
     copyfile(electrodes_file, output_file)
