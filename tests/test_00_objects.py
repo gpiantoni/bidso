@@ -8,7 +8,7 @@ def test_create_file_Core():
     assert core.subject == 'a'
     assert core.run is None
 
-    with raises(KeyError):
+    with raises(AttributeError):
         core = file_Core(weird='a')
 
 

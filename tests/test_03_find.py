@@ -1,9 +1,9 @@
 from pytest import raises, warns
 from bidso.find import find_nearest, find_root
 
-from .paths import BIDS_PATH
+from .paths import BIDS_PATH, task_ieeg
 
-filename = BIDS_PATH / 'sub-bert/ses-day02/ieeg/sub-bert_ses-day02_task-block_run-00_ieeg.bin'
+filename = task_ieeg.get_filename(BIDS_PATH)
 
 
 def test_find_root():

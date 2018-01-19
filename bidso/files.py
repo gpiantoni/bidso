@@ -30,7 +30,7 @@ class file_Core():
                 if hasattr(self, k):
                     setattr(self, k, v)
                 else:
-                    raise KeyError(f'"{k}" is not an attribute of file_Core')
+                    raise AttributeError(f'"{k}" is not an attribute of file_Core')
 
     def get_filename(self, base_dir=None):
 
