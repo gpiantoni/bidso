@@ -5,7 +5,9 @@ from numpy import ones, memmap, r_
 from numpy.random import seed, random
 
 
-from ..utils import replace_underscore
+from ..objects import Electrodes, iEEG
+from ..utils import replace_underscore, replace_extension, bids_mkdir
+from .fmri import create_events
 
 
 DATA_PATH = Path(__file__).resolve().parent / 'data'
@@ -17,17 +19,33 @@ block_dur = 32
 EXTRA_CHANS = ('EOG1', 'EOG2', 'ECG', 'EMG', 'other')
 
 
-def simulate_ieeg(root, ieeg_task):
-    pass
+def simulate_ieeg(root, ieeg_task, elec):
+    bids_mkdir(root, ieeg_task)
+
+    n_elec = len(elec.electrodes.tsv)
+    ieeg_file = ieeg_task.get_filename(root)
+
+    create_ieeg_data(ieeg_file, n_elec)
+    create_ieeg_info(replace_extension(ieeg_file, '.json'))
+    create_channels(replace_underscore(ieeg_file, 'channels.tsv'), elec)
+    create_events(replace_underscore(ieeg_file, 'events.tsv'))
+
+    return iEEG(ieeg_file)
 
 
-def create_electrodes(output_file):
-    electrodes_file = DATA_PATH / 'electrodes.tsv'
+def simulate_electrodes(root, elec_obj, electrodes_file=None):
+    bids_mkdir(root, elec_obj)
+
+    if electrodes_file is None:
+        electrodes_file = DATA_PATH / 'electrodes.tsv'
+    output_file = elec_obj.get_filename(root)
     copyfile(electrodes_file, output_file)
 
     coordframe_file = replace_underscore(output_file, 'coordframe.json')
     with coordframe_file.open('w') as f:
         dump({}, f, indent=' ')
+
+    return Electrodes(output_file)
 
 
 def create_ieeg_data(output_file, n_elec):

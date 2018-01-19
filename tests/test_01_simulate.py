@@ -2,14 +2,9 @@ from nibabel import load as nload
 from nibabel import Nifti1Image
 
 from bidso.simulate.fmri import create_bold, create_events
-from bidso.simulate.ieeg import (create_electrodes,
-                                 create_channels,
-                                 create_ieeg_info,
-                                 create_ieeg_data,
-                                 )
-from bidso.simulate import simulate_bold
-from bidso.utils import replace_underscore, replace_extension, bids_mkdir
-from bidso import Task, Electrodes
+from bidso.simulate import simulate_bold, simulate_ieeg, simulate_electrodes
+from bidso.utils import bids_mkdir
+from bidso import Task
 
 from .paths import BIDS_PATH, T1_PATH, task_ieeg, task_fmri, task_anat, elec_ct
 
@@ -24,20 +19,8 @@ def test_simulate_root():
 
 
 def test_simulate_ieeg():
-    modality_path = bids_mkdir(BIDS_PATH, task_ieeg)
-
-    elec_file = elec_ct.get_filename(BIDS_PATH)
-    create_electrodes(elec_file)
-
-    ieeg_file = modality_path / task_ieeg.get_filename()
-    create_events(replace_underscore(ieeg_file, 'events.tsv'))
-
-    elec = Electrodes(elec_file)
-    n_elec = len(elec.electrodes.tsv)
-    create_ieeg_data(ieeg_file, n_elec)
-
-    create_ieeg_info(replace_extension(ieeg_file, '.json'))
-    create_channels(replace_underscore(ieeg_file, 'channels.tsv'), elec)
+    elec = simulate_electrodes(BIDS_PATH, elec_ct)
+    simulate_ieeg(BIDS_PATH, task_ieeg, elec)
 
 
 def test_simulate_anat():

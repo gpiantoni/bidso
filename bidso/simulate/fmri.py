@@ -5,6 +5,7 @@ from numpy.random import random, seed
 from nibabel import Nifti1Image
 from nibabel import load as nload
 
+from ..objects import Task
 from ..utils import replace_extension, replace_underscore, bids_mkdir
 
 
@@ -15,6 +16,8 @@ def simulate_bold(task_fmri, root, t1):
     fmri_file = task_fmri.get_filename(root)
     create_bold(mri, fmri_file)
     create_events(replace_underscore(fmri_file, 'events.tsv'))
+
+    return Task(fmri_file)
 
 
 def create_bold(mri, bold_file):
