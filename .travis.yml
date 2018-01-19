@@ -29,15 +29,15 @@ install:
  # install requirements
  - pip install nibabel 
  - pip install pytest pytest-cov codecov
- - pip install sphinx sphinx_rtd_theme
  - pip install -e .
 
 script:
  - py.test --cov=bidso tests
- - sphinx-build -T -b html -d $BUILD_PATH/doctrees $SOURCE_PATH $HTML_PATH
 
 after_success:
  - codecov
+ - pip install sphinx sphinx_rtd_theme
+ - sphinx-build -T -b html -d $BUILD_PATH/doctrees $SOURCE_PATH $HTML_PATH
 
 notifications:
  email: false
