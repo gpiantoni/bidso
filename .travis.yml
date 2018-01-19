@@ -8,6 +8,9 @@ env:
    - DOWNLOADS=$HOME/downloads
    - CACHE=$HOME/cache
    - DERIVATIVES=tests/data/derivatives
+   - SOURCE_PATH=$TRAVIS_BUILD_DIR/docs/source
+   - BUILD_PATH=$TRAVIS_BUILD_DIR/docs/build
+   - HTML_PATH=$TRAVIS_BUILD_DIR/docs/build/html
 
 cache: 
  - directories:
@@ -29,9 +32,10 @@ install:
  - pip install -e .
 
 script:
-    - py.test --cov=bidso tests
+ - py.test --cov=bidso tests
 
 after_success:
+ - sphinx-build -T -b html -d $(BUILD_PATH)/doctrees $(SOURCE_PATH) $(HTML_PATH)
  - codecov
 
 notifications:
@@ -43,3 +47,9 @@ deploy:
    password: $PYPI_PASSWORD
    on:
      tags: true
+ - provider: pages
+   skip_cleanup: true
+   target_branch : gh-pages
+   local_dir : $HTML_PATH
+   repo : gpiantoni/bidso
+   github_token : $GITHUB_TOKEN
