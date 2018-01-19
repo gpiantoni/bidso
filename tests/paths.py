@@ -9,7 +9,6 @@ BIDS_PATH.mkdir(parents=True, exist_ok=True)
 DERIVATIVES_PATH = DATA_PATH / 'derivatives'
 FREESURFER_PATH = DERIVATIVES_PATH / 'freesurfer'
 
-
 subject = 'bert'
 task_ieeg = file_Core(
     subject=subject,
@@ -38,6 +37,7 @@ elec_ct = file_Core(
     session='day02',
     modality='electrodes',
     extension='.tsv',
+    acquisition='ct',
     )
 
 

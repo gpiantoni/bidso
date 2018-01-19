@@ -1,6 +1,6 @@
 from pytest import raises
 from bidso import file_Core
-from .paths import BIDS_PATH
+from .paths import BIDS_PATH, elec_ct
 
 
 def test_create_file_Core():
@@ -24,3 +24,7 @@ def test_get_filename():
     assert core.get_filename() == expected
     assert core.get_filename(BIDS_PATH).name == expected
     assert str(core.get_filename(BIDS_PATH).relative_to(BIDS_PATH).parent) == 'sub-bert/ses-day02/ieeg'
+
+
+def test_elec_filename():
+    assert elec_ct.get_filename() == 'sub-bert_ses-day02_acq-ct_electrodes.tsv'

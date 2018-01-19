@@ -18,7 +18,7 @@ def find_root(filename, target='bids'):
 
     Returns
     -------
-    instance of Path
+    Path
         path of the target directory
     """
     lg.debug(f'Searching root in {filename}')
@@ -39,6 +39,16 @@ def find_nearest(filename, pattern=None, **kwargs):
     ----------
     filename : instance of Path
         search the root for this file
+    pattern : str
+        glob string for search criteria of the filename of interest (remember
+        to include '*'). The pattern is passed directly to rglob.
+    kwargs : dict
+
+
+    Returns
+    -------
+    Path
+        closest filename matching the pattern
     """
     lg.debug(f'Searching nearest in {filename}')
 
