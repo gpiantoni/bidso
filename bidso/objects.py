@@ -9,6 +9,20 @@ class Electrodes(file_Core):
         self.electrodes = file_Tsv(filename)
         self.coordframe = file_Json(replace_underscore(self.filename, 'coordframe.json'))
 
+    def get_xyz(self, list_of_names=None):
+        """
+        TODO
+        ----
+        coordinate system of electrodes
+        """
+        if list_of_names is not None:
+            filter_lambda = lambda x: x['name'] in list_of_names
+        else:
+            filter_lambda = None
+
+        return self.electrodes.get(filter_lambda=filter_lambda,
+                                   map_lambda=lambda e: (e['x'], e['y'], e['z']))
+
 
 class Task(file_Core):
     def __init__(self, filename):
