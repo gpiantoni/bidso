@@ -10,7 +10,18 @@ class Electrodes(file_Core):
         self.coordframe = file_Json(replace_underscore(self.filename, 'coordframe.json'))
 
     def get_xyz(self, list_of_names=None):
-        """
+        """Get xyz coordinates for these electrodes
+
+        Parameters
+        ----------
+        list_of_names : list of str
+            list of electrode names to use
+
+        Returns
+        -------
+        list of tuples
+            list of xyz coordinates for all the electrodes
+
         TODO
         ----
         coordinate system of electrodes
