@@ -1,6 +1,6 @@
 from .files import file_Core, file_Json, file_Tsv
 from .utils import replace_extension, replace_underscore
-from .find import find_nearest
+from .find import find_in_bids
 
 
 class Electrodes(file_Core):
@@ -47,5 +47,5 @@ class Task(file_Core):
 class iEEG(Task):
     def __init__(self, filename, electrodes='*'):
         super().__init__(filename)
-        self.channels = file_Tsv(find_nearest(self.filename, '*_channels.tsv'))
-        self.electrodes = Electrodes(find_nearest(self.filename, electrodes + '_electrodes.tsv'))
+        self.channels = file_Tsv(find_in_bids(self.filename, upwards=True, modality='channels', extension='.tsv'))
+        self.electrodes = Electrodes(find_in_bids(self.filename, upwards=True, acquisition=electrodes, modality='electrodes', extension='.tsv'))
