@@ -12,7 +12,7 @@ def test_find_root():
     assert find_root(filename, target='session').name == 'ses-day02'
 
 
-def test_find_nearest_01():
+def test_find_in_bids_01():
 
     found = find_in_bids(filename, subject='bert', session='day01', run='00',
                          extension='.nii.gz', upwards=True)
@@ -23,16 +23,34 @@ def test_find_nearest_01():
                      modality='channels', upwards=True)
 
 
-def test_find_nearest_02():
+def test_find_in_bids_02():
 
     with raises(FileNotFoundError):
-        find_in_bids(filename, subject='xxx')
+        find_in_bids(filename, upwards=True, subject='xxx')
 
 
-def test_find_nearest_03():
+def test_find_in_bids_03():
 
     with raises(FileNotFoundError):
-        find_in_bids(filename, subject='bert')
+        find_in_bids(filename, upwards=True, subject='bert')
+
+
+def test_find_in_bids_04():
+    assert sum(1 for x in find_in_bids(BIDS_PATH, generator=True, subject='bert')) == 10
+
+
+def test_find_in_bids_05():
+    with raises(FileNotFoundError):
+        find_in_bids(BIDS_PATH, subject='xxx')
+
+    with raises(StopIteration):
+        next(find_in_bids(BIDS_PATH, subject='xxx', generator=True))
+
+
+def test_find_in_bids_06():
+    with raises(ValueError):
+        find_in_bids(BIDS_PATH, upwards=True, generator=True)
+
 
 def test_generate_pattern():
     assert _generate_pattern(dict(subject='test')) == 'sub-test_*.*'
