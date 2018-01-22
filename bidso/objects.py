@@ -19,7 +19,7 @@ class Electrodes(file_Core):
 
         Returns
         -------
-        list of tuples
+        list of tuples of 3 floats (x, y, z)
             list of xyz coordinates for all the electrodes
 
         TODO
@@ -32,7 +32,9 @@ class Electrodes(file_Core):
             filter_lambda = None
 
         return self.electrodes.get(filter_lambda=filter_lambda,
-                                   map_lambda=lambda e: (e['x'], e['y'], e['z']))
+                                   map_lambda=lambda e: (float(e['x']),
+                                                         float(e['y']),
+                                                         float(e['z'])))
 
 
 class Task(file_Core):
