@@ -17,7 +17,7 @@ def find_extension(filename):
     if isinstance(filename, Path):
         filename = filename.name
 
-    return '.'.join(filename.split('.')[1:])
+    return '.' + '.'.join(filename.split('.')[1:])
 
 
 def add_extension(filename, suffix):
