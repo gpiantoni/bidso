@@ -14,7 +14,8 @@ DATA_PATH = Path(__file__).resolve().parent / 'data'
 
 sf = 256
 dur = 192
-EFFECT_SIZE = 3
+AMPLITUDE = 1000
+EFFECT_SIZE = 2
 block_dur = 32
 EXTRA_CHANS = ('EOG1', 'EOG2', 'ECG', 'EMG', 'other')
 
@@ -58,7 +59,7 @@ def create_ieeg_data(output_file, n_elec):
 
     random.seed(100)
     t = r_[ones(block_dur * sf) * EFFECT_SIZE, ones(block_dur * sf), ones(block_dur * sf) * EFFECT_SIZE, ones(block_dur * sf), ones(block_dur * sf) * EFFECT_SIZE, ones(block_dur * sf)]
-    data = random.random((n_chan, sf * dur)) * t[None, :]
+    data = random.random((n_chan, sf * dur)) * t[None, :] * AMPLITUDE
 
     dtype = 'float64'
     memshape = (n_chan, sf * dur)
