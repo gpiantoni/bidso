@@ -42,8 +42,12 @@ def simulate_electrodes(root, elec_obj, electrodes_file=None):
     copyfile(electrodes_file, output_file)
 
     coordframe_file = replace_underscore(output_file, 'coordframe.json')
+    COORDFRAME = {
+        'iEEGCoordinateSystem': 'tkRAS',
+        'iEEGCoordinateProcessingDescripton': '',
+        }
     with coordframe_file.open('w') as f:
-        dump({}, f, indent=' ')
+        dump(COORDFRAME, f, indent=' ')
 
     return Electrodes(output_file)
 
