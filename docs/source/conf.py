@@ -71,13 +71,3 @@ html_theme_options = {
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'bidsodoc'
-
-def run_apidoc(_):
-    chdir(cur_dir)  # use same dir as readthedocs, which is docs/source
-    from sphinx.apidoc import main
-    output_path = join(cur_dir, 'api')
-    # here use paths relative to docs/source
-    main(['', '-fMeT', '-o', output_path, '../../bidso'])
-
-def setup(app):
-    app.connect('builder-inited', run_apidoc)

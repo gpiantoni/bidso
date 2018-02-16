@@ -9,6 +9,7 @@ env:
    - CACHE=$HOME/cache
    - DERIVATIVES=tests/data/derivatives
    - SOURCE_PATH=$TRAVIS_BUILD_DIR/docs/source
+   - API_PATH=$SOURCE_PATH/api
    - BUILD_PATH=$TRAVIS_BUILD_DIR/docs/build
    - HTML_PATH=$TRAVIS_BUILD_DIR/docs/build/html
 
@@ -37,6 +38,7 @@ script:
 after_success:
  - codecov
  - pip install sphinx sphinx_rtd_theme
+ - sphinx-apidoc -fMeT -o $API_PATH bidso
  - sphinx-build -T -b html -d $BUILD_PATH/doctrees $SOURCE_PATH $HTML_PATH
 
 notifications:

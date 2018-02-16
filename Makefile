@@ -9,6 +9,7 @@ DERIVATIVES_PATH = $(DATA_PATH)/derivatives
 COV_PATH = htmlcov
 
 doc:
+	sphinx-apidoc -fMET -o $(API_PATH) bidso
 	sphinx-build -T -b html -d $(BUILD_PATH)/doctrees $(SOURCE_PATH) $(HTML_PATH)
 
 test:
