@@ -53,8 +53,15 @@ def test_find_in_bids_06():
 
 
 def test_generate_pattern():
-    assert _generate_pattern(dict(subject='test')) == 'sub-test_*.*'
-    assert _generate_pattern(dict(subject='test', session='sess')) == 'sub-test_ses-sess_*.*'
-    assert _generate_pattern(dict(subject='test', modality='mod')) == 'sub-test_*_mod.*'
-    assert _generate_pattern(dict(session='sess', extension='.nii.gz')) == '*_ses-sess_*.nii.gz'
-    assert _generate_pattern(dict(modality='mod', extension='.nii.gz')) == '*_mod.nii.gz'
+    assert _generate_pattern(True, dict(subject='test')) == 'sub-test_*.*'
+    assert _generate_pattern(False, dict(subject='test')) == 'sub-test.*'
+
+    assert _generate_pattern(True, dict(subject='test', session='sess')) == 'sub-test_ses-sess_*.*'
+    assert _generate_pattern(True, dict(subject='test', modality='mod')) == 'sub-test_*_mod.*'
+    assert _generate_pattern(True, dict(session='sess', extension='.nii.gz')) == '*_ses-sess_*.nii.gz'
+    assert _generate_pattern(True, dict(modality='mod', extension='.nii.gz')) == '*_mod.nii.gz'
+
+
+def test_wildcard_subject():
+    with raises(ValueError):
+        _generate_pattern(False, dict())

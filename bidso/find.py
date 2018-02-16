@@ -33,7 +33,8 @@ def find_root(filename, target='bids'):
     return find_root(filename.parent, target)
 
 
-def find_in_bids(filename, pattern=None, generator=False, upwards=False, **kwargs):
+def find_in_bids(filename, pattern=None, generator=False, upwards=False,
+                 wildcard=True, **kwargs):
     """Find nearest file matching some criteria.
 
     Parameters
@@ -43,6 +44,9 @@ def find_in_bids(filename, pattern=None, generator=False, upwards=False, **kwarg
     pattern : str
         glob string for search criteria of the filename of interest (remember
         to include '*'). The pattern is passed directly to rglob.
+    wildcard : bool
+        use wildcards for unspecified fields or not (if True, add "_*_" between
+        fields)
     upwards : bool
         where to keep on searching upwards
     kwargs : dict
@@ -57,7 +61,7 @@ def find_in_bids(filename, pattern=None, generator=False, upwards=False, **kwarg
         raise ValueError('You cannot search upwards and have a generator')
 
     if pattern is None:
-        pattern = _generate_pattern(kwargs)
+        pattern = _generate_pattern(wildcard, kwargs)
 
     lg.debug(f'Searching {pattern} in {filename}')
 
@@ -82,7 +86,10 @@ def find_in_bids(filename, pattern=None, generator=False, upwards=False, **kwarg
         raise FileNotFoundError(f'Multiple files matching "{pattern}":\n\t"{matches_str}"')
 
 
-def _generate_pattern(kwargs):
+def _generate_pattern(wildcard, kwargs):
+
+    if not wildcard and 'subject' not in kwargs:
+        raise ValueError('You need to specify "subject" if you do not use any wildcard')
 
     unknown = set(kwargs) - set(['subject', 'session', 'task', 'run', 'acquisition', 'modality', 'extension'])
     if len(unknown) > 0:
@@ -95,27 +102,27 @@ def _generate_pattern(kwargs):
 
     if 'session' in kwargs:
         pattern += '_ses-' + kwargs['session'] + '_'
-    else:
+    elif wildcard:
         pattern += '_*'
 
     if 'task' in kwargs:
         pattern += '_task-' + kwargs['task'] + '_'
-    else:
+    elif wildcard:
         pattern += '_*'
 
     if 'run' in kwargs:
         pattern += '_run-' + kwargs['run'] + '_'
-    else:
+    elif wildcard:
         pattern += '_*'
 
     if 'acquisition' in kwargs:
         pattern += '_acq-' + kwargs['acquisition'] + '_'
-    else:
+    elif wildcard:
         pattern += '_*'
 
     if 'modality' in kwargs:
         pattern += '_' + kwargs['modality']
-    else:
+    elif wildcard:
         pattern += '_*'
 
     if 'extension' in kwargs:
@@ -128,4 +135,3 @@ def _generate_pattern(kwargs):
     pattern = pattern.replace('__', '_')
 
     return pattern
-
