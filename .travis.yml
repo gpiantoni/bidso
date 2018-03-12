@@ -51,6 +51,8 @@ deploy:
    on:
      tags: true
  - provider: pages
+   edge:
+     branch: pages-ivar-set
    skip_cleanup: true
    target_branch : gh-pages
    local_dir : docs/build/html
