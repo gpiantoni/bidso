@@ -1,5 +1,5 @@
 from json import dump
-from numpy import NaN, ones, r_, stack, random
+from numpy import NaN, ones, r_, stack, random, array
 
 from nibabel import Nifti1Image
 from nibabel import load as nload
@@ -13,13 +13,13 @@ def simulate_bold(root, task_fmri, t1):
     mri = nload(str(t1))
 
     fmri_file = task_fmri.get_filename(root)
-    create_bold(mri, fmri_file)
+    create_bold(mri, fmri_file, task_fmri.task)
     create_events(replace_underscore(fmri_file, 'events.tsv'))
 
     return Task(fmri_file)
 
 
-def create_bold(mri, bold_file):
+def create_bold(mri, bold_file, taskname):
     x = mri.get_data()
     DOWNSAMPLE = 4
 
@@ -39,11 +39,12 @@ def create_bold(mri, bold_file):
     bold += random.random(bold.shape) * 2
     nifti = Nifti1Image(bold.astype('float32'), af)
     nifti.header['pixdim'][4] = TR
+    nifti.header['xyzt_units'] = array([2, 2, 2, 8])  # code for mm, seconds
     nifti.to_filename(str(bold_file))
 
     d = {
         'RepetitionTime': TR,
-        'TaskName': bold_file.task,
+        'TaskName': taskname,
         }
 
     json_bold = replace_extension(bold_file, '.json')
