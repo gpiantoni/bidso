@@ -21,7 +21,6 @@ def simulate_bold(root, task_fmri, t1):
 
 def create_bold(mri, bold_file):
     x = mri.get_data()
-    print(x.shape)
     DOWNSAMPLE = 4
 
     af = mri.affine.copy()
@@ -34,15 +33,22 @@ def create_bold(mri, bold_file):
     SHIFT = 3
     bold = (xm[:, :, :, None] + r_[ones(SHIFT), ones(16) * 5, ones(16), ones(16) * 5, ones(16), ones(16) * 5, ones(16 - SHIFT)])
 
+    TR = 2.
+
     random.seed(100)
     bold += random.random(bold.shape) * 2
     nifti = Nifti1Image(bold.astype('float32'), af)
-    nifti.header['pixdim'][4] = 2.   # TR
+    nifti.header['pixdim'][4] = TR
     nifti.to_filename(str(bold_file))
+
+    d = {
+        'RepetitionTime': TR,
+        'TaskName': bold_file.task,
+        }
 
     json_bold = replace_extension(bold_file, '.json')
     with json_bold.open('w') as f:
-        dump({}, f)
+        dump(d, f, ensure_ascii=False, indent=' ')
 
 
 def create_events(tsv_file):
