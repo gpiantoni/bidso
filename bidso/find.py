@@ -23,7 +23,7 @@ def find_root(filename, target='bids'):
         path of the target directory
     """
     lg.debug(f'Searching root in {filename}')
-    if target == 'bids' and (filename / 'participants.tsv').exists():
+    if target == 'bids' and (filename / 'dataset_description.json').exists():
         return filename
     elif filename.is_dir():
         pattern = target[:3] + '-'
