@@ -37,8 +37,8 @@ elec_ct = file_Core(
     subject=subject,
     session='day02',
     modality='electrodes',
-    extension='.tsv',
     acquisition='ct',
+    extension='.tsv',
     )
 
 

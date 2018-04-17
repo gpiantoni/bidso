@@ -1,5 +1,5 @@
 from json import dump
-from numpy import NaN, ones, r_, stack, random, array
+from numpy import NaN, ones, r_, stack, random
 
 from nibabel import Nifti1Image
 from nibabel import load as nload
@@ -39,7 +39,7 @@ def create_bold(mri, bold_file, taskname):
     bold += random.random(bold.shape) * 2
     nifti = Nifti1Image(bold.astype('float32'), af)
     nifti.header['pixdim'][4] = TR
-    nifti.header['xyzt_units'] = array([2, 2, 2, 8])  # code for mm, seconds
+    nifti.header.set_xyzt_units('mm', 'sec')
     nifti.to_filename(str(bold_file))
 
     d = {

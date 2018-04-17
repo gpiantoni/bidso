@@ -7,7 +7,9 @@ from .paths import BIDS_PATH, T1_PATH, task_ieeg, task_fmri, task_anat, elec_ct
 
 
 def test_simulate_root():
-
+    """
+    TODO: this should be part of the main package
+    """
     participants_tsv = BIDS_PATH / 'participants.tsv'
     with participants_tsv.open('w') as f:
         f.write('participant_id\tage\tsex\n')
