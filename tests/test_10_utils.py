@@ -1,4 +1,4 @@
-from bidso.utils import replace_extension, replace_underscore, find_extension
+from bidso.utils import replace_extension, replace_underscore, find_extension, add_modality
 from .paths import BIDS_PATH, elec_ct
 
 
@@ -12,3 +12,9 @@ def test_replace_extension():
 
 def test_replace_underscore():
     assert replace_underscore('file_mod.txt', 'dat.txt') == 'file_dat.txt'
+
+
+def test_modality():
+    assert BIDS_PATH == add_modality(BIDS_PATH, None)
+    assert BIDS_PATH / 'xxx' == add_modality(BIDS_PATH, 'xxx')
+    assert BIDS_PATH / 'ieeg' == add_modality(BIDS_PATH, 'events')

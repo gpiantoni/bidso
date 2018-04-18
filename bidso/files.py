@@ -98,7 +98,6 @@ class file_Tsv(file_Core):
         return list(map(map_lambda, filter(filter_lambda, self.tsv)))
 
 
-
 class file_Json(file_Core):
     def __init__(self, filename):
         super().__init__(filename)

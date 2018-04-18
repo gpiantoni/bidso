@@ -1,5 +1,8 @@
+from logging import getLogger
 from pathlib import Path
 from re import search
+
+lg = getLogger(__name__)
 
 
 def read_tsv(filename):
@@ -75,14 +78,21 @@ def add_modality(output_path, modality):
     folder (such as "func"). You should always use the specific modality ('bold').
     This function converts it to the folder name.
     """
-    if modality is None or modality in ('electrodes', 'events'):
+    if modality is None:
         return output_path
     else:
-        if modality == 'T1w':  # TODO: there are many other ones
+        if modality == 'T1w':
             modality = 'anat'
 
-        if modality == 'bold':  # TODO: there are many other ones
+        if modality == 'bold':
             modality = 'func'
+
+        if modality == 'electrodes':
+            modality = 'ieeg'
+
+        if modality == 'events':
+            lg.warning('modality "events" is ambiguous (can be in folder "ieeg" or "func"). Assuming "ieeg"')
+            modality = 'ieeg'
 
         return output_path / modality
 
