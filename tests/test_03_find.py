@@ -14,9 +14,9 @@ def test_find_root():
 
 def test_find_in_bids_01():
 
-    found = find_in_bids(filename, subject='bert', session='day01', run='00',
+    found = find_in_bids(filename, subject='bert', session='day01', run='1',
                          extension='.nii.gz', upwards=True)
-    assert found.name == 'sub-bert_ses-day01_task-block_run-00_bold.nii.gz'
+    assert found.name == 'sub-bert_ses-day01_task-block_run-1_bold.nii.gz'
 
     with warns(UserWarning):
         find_in_bids(filename, subject='bert', useless='xxx', task='block',
