@@ -36,7 +36,7 @@ def test_find_in_bids_03():
 
 
 def test_find_in_bids_04():
-    assert sum(1 for x in find_in_bids(BIDS_PATH, generator=True, subject='bert')) == 10
+    assert sum(1 for x in find_in_bids(BIDS_PATH, generator=True, subject='bert')) == 12
 
 
 def test_find_in_bids_05():
