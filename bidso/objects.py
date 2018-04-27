@@ -7,7 +7,7 @@ class Electrodes(file_Core):
     def __init__(self, filename):
         super().__init__(filename)
         self.electrodes = file_Tsv(filename)
-        self.coordframe = file_Json(replace_underscore(self.filename, 'coordframe.json'))
+        self.coordframe = file_Json(replace_underscore(self.filename, 'coordsystem.json'))
 
     def get_xyz(self, list_of_names=None):
         """Get xyz coordinates for these electrodes
