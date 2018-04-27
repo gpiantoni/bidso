@@ -45,7 +45,12 @@ class Task(file_Core):
 
 
 class iEEG(Task):
-    def __init__(self, filename, electrodes='*'):
+    electrodes = None
+    channels = None
+
+    def __init__(self, filename):
         super().__init__(filename)
         self.channels = file_Tsv(find_in_bids(self.filename, upwards=True, modality='channels', task=self.task, run=self.run, extension='.tsv'))
+
+    def read_electrodes(self, electrodes='*'):
         self.electrodes = Electrodes(find_in_bids(self.filename, upwards=True, acquisition=electrodes, modality='electrodes', extension='.tsv'))

@@ -92,7 +92,7 @@ def create_channels(output_file, elec):
             f.write(f'{one_elec["name"]}\tECOG\tµV\t{S_FREQ}\tn/a\tn/a\tn/a\tn/a\tgood\n')
 
         for chan_name in EXTRA_CHANS:
-            f.write(f'{one_elec["name"]}\tother\tµV\t{S_FREQ}\tn/a\tn/a\tn/a\tn/a\tgood\n')
+            f.write(f'{chan_name}\tother\tµV\t{S_FREQ}\tn/a\tn/a\tn/a\tn/a\tgood\n')
 
 
 def create_ieeg_info(output_file):
