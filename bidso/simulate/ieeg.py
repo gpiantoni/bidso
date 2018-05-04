@@ -55,7 +55,7 @@ def simulate_electrodes(root, elec_obj, electrodes_file=None):
     COORDSYSTEM = {
         "iEEGCoordinateSystem": 'T1w',
         "iEEGCoordinateUnits": 'mm',
-        "iEEGCoordinateProcessingDescripton": "none",
+        "iEEGCoordinateProcessingDescription": "none",
         "IntendedFor": "/sub-bert/ses-day01/anat/sub-bert_ses-day01_T1w.nii.gz",
         "AssociatedImageCoordinateSystem": "T1w",
         "AssociatedImageCoordinateUnits": "mm",
