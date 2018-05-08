@@ -2,7 +2,6 @@ from nibabel import load as nload
 from nibabel import Nifti1Image
 
 from ..files import file_Core
-from ..utils import bids_mkdir
 
 
 def simulate_anat(root, task_anat, t1):
@@ -10,7 +9,8 @@ def simulate_anat(root, task_anat, t1):
     x = mri.get_data()
     nifti = Nifti1Image(x, mri.affine)
 
-    anat_path = bids_mkdir(root, task_anat)
-    nifti.to_filename(str(anat_path / f'sub-{task_anat.subject}_ses-{task_anat.session}_T1w.nii.gz'))
+    anat_path = task_anat.get_filename(root)
+    anat_path.parent.mkdir(exist_ok=True, parents=True)
+    nifti.to_filename(str(anat_path))
 
     return file_Core(anat_path)  # use the general file_Core (Task needs events.tsv)
