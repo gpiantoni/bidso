@@ -26,7 +26,7 @@ BV_ORIENTATION = 'MULTIPLEXED'  # 'F'
 BV_DATATYPE = 'IEEE_FLOAT_32'  # float32
 RESOLUTION = 1
 
-current_time = datetime.now()
+fake_time = datetime(2017, 5, 16, 20, 45, 6)
 
 
 def simulate_ieeg(root, ieeg_task, elec):
@@ -111,7 +111,7 @@ def create_ieeg_info(output_file):
 def _write_vhdr(filename, chans):
     vhdr_txt = f"""\
     Brain Vision Data Exchange Header File Version 1.0
-    ; Data created by the BIDSO {bidso.__version__} on {current_time}
+    ; Data created by the BIDSO {bidso.__version__} on {fake_time}
 
     [Common Infos]
     Codepage=UTF-8
@@ -161,7 +161,7 @@ def _write_vmrk(filename):
     vmrk_txt = dedent(vmrk_txt)
     # found a way to write \1
     vmrk_txt += r'; Commas in type or description are coded as "\1".'
-    vmrk_txt += f'\nMk1=New Segment,,1,1,0,{current_time:%Y%m%d%H%M%S%f}\n'
+    vmrk_txt += f'\nMk1=New Segment,,1,1,0,{fake_time:%Y%m%d%H%M%S%f}\n'
 
     with filename.open('w') as f:
         f.write(vmrk_txt)
