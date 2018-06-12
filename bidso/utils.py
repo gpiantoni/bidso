@@ -87,12 +87,11 @@ def add_modality(output_path, modality):
         if modality == 'bold':
             modality = 'func'
 
-        if modality == 'electrodes':
+        if modality in ('electrodes', 'coordsystem', 'channels'):
             modality = 'ieeg'
 
         if modality == 'events':
-            lg.warning('modality "events" is ambiguous (can be in folder "ieeg" or "func"). Assuming "ieeg"')
-            modality = 'ieeg'
+            raise ValueError('modality "events" is ambiguous (can be in folder "ieeg" or "func"). Assuming "ieeg"')
 
         return output_path / modality
 

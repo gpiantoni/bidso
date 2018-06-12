@@ -32,7 +32,7 @@ class file_Core():
                 else:
                     raise AttributeError(f'"{k}" is not an attribute of file_Core')
 
-    def get_filename(self, base_dir=None):
+    def get_filename(self, base_dir=None, modality=None):
 
         filename = 'sub-' + self.subject
         if self.session is not None:
@@ -55,7 +55,11 @@ class file_Core():
             dir_name = base_dir / ('sub-' + self.subject)
             if self.session is not None:
                 dir_name /= 'ses-' + self.session
-            dir_name = add_modality(dir_name, self.modality)
+
+            if modality is not None:
+                dir_name /= modality
+            else:
+                dir_name = add_modality(dir_name, self.modality)
 
             return dir_name / filename
 
