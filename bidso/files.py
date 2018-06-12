@@ -33,7 +33,24 @@ class file_Core():
                     raise AttributeError(f'"{k}" is not an attribute of file_Core')
 
     def get_filename(self, base_dir=None, modality=None):
+        """Construct filename based on the attributes.
 
+        Parameters
+        ----------
+        base_dir : Path
+            path of the root directory. If specified, the return value is a Path,
+            with base_dir / sub-XXX / (ses-XXX /) modality / filename
+            otherwise the return value is a string.
+        modality : str
+            overwrite value for modality (i.e. the directory inside subject/session).
+            This is necessary because sometimes the modality attribute is ambiguous.
+
+        Returns
+        -------
+        str or Path
+            str of the filename if base_dir is not specified, otherwise the full
+            Path
+        """
         filename = 'sub-' + self.subject
         if self.session is not None:
             filename += '_ses-' + self.session
