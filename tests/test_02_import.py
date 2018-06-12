@@ -17,4 +17,6 @@ def test_directories_xxx():
 
 def test_objects_xxx():
     Task(task_fmri.get_filename(BIDS_PATH))
-    iEEG(task_ieeg.get_filename(BIDS_PATH))
+    ieeg = iEEG(task_ieeg.get_filename(BIDS_PATH))
+    ieeg.read_electrodes()
+    assert len(ieeg.electrodes.electrodes.tsv) == 28
