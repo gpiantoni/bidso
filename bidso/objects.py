@@ -50,7 +50,7 @@ class iEEG(Task):
 
     def __init__(self, filename):
         super().__init__(filename)
-        self.channels = file_Tsv(find_in_bids(self.filename, upwards=True, modality='channels', task=self.task, run=self.run, extension='.tsv'))
+        self.channels = file_Tsv(replace_underscore(self.filename, 'channels.tsv'))
 
     def read_electrodes(self, electrodes='*'):
         self.electrodes = Electrodes(find_in_bids(self.filename, upwards=True, acquisition=electrodes, modality='electrodes', extension='.tsv'))
