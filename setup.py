@@ -43,7 +43,7 @@ setup(
     package_data={
         'bidso': [
             'VERSION',
-            'bidso/simulate/data/electrodes.tsv',
+            'simulate/data/electrodes.tsv',
             ],
     },
     )
