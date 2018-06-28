@@ -84,13 +84,16 @@ def add_modality(output_path, modality):
         if modality == 'T1w':
             modality = 'anat'
 
-        if modality == 'bold':
+        elif modality == 'bold':
             modality = 'func'
 
-        if modality in ('electrodes', 'coordsystem', 'channels'):
+        elif modality == 'epi':  # topup
+            modality = 'fmap'
+
+        elif modality in ('electrodes', 'coordsystem', 'channels'):
             modality = 'ieeg'
 
-        if modality == 'events':
+        elif modality == 'events':
             raise ValueError('modality "events" is ambiguous (can be in folder "ieeg" or "func"). Assuming "ieeg"')
 
         return output_path / modality

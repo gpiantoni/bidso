@@ -11,6 +11,7 @@ class file_Core():
     modality = None
     run = None
     acquisition = None
+    direction = None
     task = None
     extension = None
 
@@ -22,6 +23,7 @@ class file_Core():
             self.modality = remove_extension(self.filename.name).split('_')[-1]
             self.run = _match(self.filename, '_run-([a-zA-Z0-9\-]+)_')
             self.acquisition = _match(self.filename, '_acq-([a-zA-Z0-9\-]+)_')
+            self.direction = _match(self.filename, '_dir-([a-zA-Z0-9\-]+)_')
             self.task = _match(self.filename, '_task-([a-zA-Z0-9\-]+)_')
             self.extension = find_extension(self.filename)
 
@@ -56,10 +58,14 @@ class file_Core():
             filename += '_ses-' + self.session
         if self.task is not None:
             filename += '_task-' + self.task
-        if self.run is not None:
+        if self.run is not None and self.direction is None:
             filename += '_run-' + self.run
         if self.acquisition is not None:
             filename += '_acq-' + self.acquisition
+        if self.direction is not None:
+            filename += '_dir-' + self.direction
+        if self.run is not None and self.direction is not None:
+            filename += '_run-' + self.run
         if self.modality is not None:
             filename += '_' + self.modality
         if self.extension is not None:
