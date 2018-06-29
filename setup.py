@@ -29,12 +29,10 @@ setup(
         'Programming Language :: Python :: 3.6',
         ],
     keywords='bids',
-    packages=find_packages(exclude=('test', )),
-    install_requires=[
-        'nibabel',
-        ],
+    packages=find_packages(exclude=('tests', )),
     extras_require={
         'test': [  # to run tests
+            'sanajeh',
             'pytest',
             'pytest-cov',
             'codecov',

@@ -6,6 +6,7 @@ Features
 --------
 
 - Pure Python
+- No dependencies
 
 Installation
 ------------
@@ -16,8 +17,6 @@ Install won by running:
 Requirements
 ------------
 - Python 3.6
-- nibabel
-
 
 Status
 ------
