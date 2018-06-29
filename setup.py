@@ -40,10 +40,4 @@ setup(
             'codecov',
             ],
         },
-    package_data={
-        'bidso': [
-            'VERSION',
-            'simulate/data/electrodes.tsv',
-            ],
-    },
     )
