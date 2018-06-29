@@ -20,9 +20,9 @@ cache:
 
 install: 
  # install requirements
- - pip install sanajeh
  - pip install pytest pytest-cov codecov
  - pip install -e .
+ - pip install sanajeh
 
 script:
  - py.test --cov=bidso tests

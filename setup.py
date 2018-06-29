@@ -38,4 +38,9 @@ setup(
             'codecov',
             ],
         },
+    package_data={
+        'bidso': [
+            'VERSION',
+            ],
+    },
     )
