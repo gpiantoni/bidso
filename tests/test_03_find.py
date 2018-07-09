@@ -16,10 +16,10 @@ def test_find_in_bids_01():
 
     found = find_in_bids(filename, subject='bert', session='day01', run='1',
                          extension='.nii.gz', upwards=True)
-    assert found.name == 'sub-bert_ses-day01_task-block_run-1_bold.nii.gz'
+    assert found.name == 'sub-bert_ses-day01_task-motor_run-1_bold.nii.gz'
 
     with warns(UserWarning):
-        find_in_bids(filename, subject='bert', useless='xxx', task='block',
+        find_in_bids(filename, subject='bert', useless='xxx', task='motor',
                      modality='channels', upwards=True)
 
 
@@ -36,7 +36,7 @@ def test_find_in_bids_03():
 
 
 def test_find_in_bids_04():
-    assert sum(1 for x in find_in_bids(BIDS_PATH, generator=True, subject='bert')) == 12
+    assert sum(1 for x in find_in_bids(BIDS_PATH, generator=True, subject='bert')) == 21
 
 
 def test_find_in_bids_05():

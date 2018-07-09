@@ -178,6 +178,7 @@ if __name__ == '__main__':
         _clean_all()
 
     if args.tests:
+        _clean_all()
         returncode = _tests()
 
     if args.docs:
