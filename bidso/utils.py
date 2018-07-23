@@ -2,17 +2,27 @@ from logging import getLogger
 from pathlib import Path
 from re import search
 
+try:
+    import numpy
+except ImportError:
+    numpy = False
+
 lg = getLogger(__name__)
 
 
 def read_tsv(filename):
     filename = Path(filename)
-    with filename.open(encoding='utf-8') as f:
-        hdr = f.readline()
-        tsv = []
-        for l in f:
-            d = {k.strip(): v.strip() for k, v in zip(hdr.split('\t'), l.split('\t'))}
-            tsv.append(d)
+    if numpy:
+        tsv = numpy.genfromtxt(fname=filename, delimiter='\t', names=True)
+
+    else:
+        with filename.open(encoding='utf-8') as f:
+            hdr = f.readline()
+            tsv = []
+            for l in f:
+                d = {k.strip(): v.strip() for k, v in zip(hdr.split('\t'), l.split('\t'))}
+                tsv.append(d)
+
     return tsv
 
 
