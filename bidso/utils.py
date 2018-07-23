@@ -7,7 +7,7 @@ lg = getLogger(__name__)
 
 def read_tsv(filename):
     filename = Path(filename)
-    with filename.open() as f:
+    with filename.open(encoding='utf-8') as f:
         hdr = f.readline()
         tsv = []
         for l in f:
