@@ -13,7 +13,13 @@ lg = getLogger(__name__)
 def read_tsv(filename):
     filename = Path(filename)
     if numpy:
-        tsv = numpy.genfromtxt(fname=filename, delimiter='\t', names=True)
+        tsv = numpy.genfromtxt(
+            fname=filename,
+            delimiter='\t',
+            names=True,
+            dtype=None,  # forces it to read strings
+            deletechars='',
+            encoding='utf-8')
 
     else:
         with filename.open(encoding='utf-8') as f:
