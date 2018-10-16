@@ -9,7 +9,7 @@ from bidso.directories import (dir_Root,
 from .paths import BIDS_PATH, task_fmri, task_ieeg
 
 
-def test_directories_xxx():
+def notest_directories_xxx():
     dir_Root(BIDS_PATH)
 
     dir_Session(bids_mkdir(BIDS_PATH, task_fmri))
