@@ -20,6 +20,7 @@ cache:
 
 install: 
  # install requirements
+ - pip install numpy -U  # update to latest numpy
  - pip install pytest pytest-cov codecov
  - pip install Cython 
  - pip install scikit-image popeye 
