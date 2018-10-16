@@ -16,7 +16,7 @@ setup(
     long_description=long_description,
     url='https://github.com/gpiantoni/bidso',
     author="Gio Piantoni",
-    author_email='bids@gpiantoni.com',
+    author_email='bidso@gpiantoni.com',
     license='MIT',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
