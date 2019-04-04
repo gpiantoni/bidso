@@ -79,7 +79,7 @@ def find_in_bids(filename, pattern=None, generator=False, upwards=False,
         if upwards:
             return find_in_bids(filename.parent, pattern=pattern, upwards=upwards)
         else:
-            raise FileNotFoundError(f'Could not find file matchting {pattern} in {filename}')
+            raise FileNotFoundError(f'Could not find file matching {pattern} in {filename}')
 
     else:
         matches_str = '"\n\t"'.join(str(x) for x in matches)

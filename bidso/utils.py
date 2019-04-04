@@ -97,7 +97,7 @@ def add_modality(output_path, modality):
     if modality is None:
         return output_path
     else:
-        if modality == 'T1w':
+        if modality in ('T1w', 'T2star', 'FLAIR', 'PD'):
             modality = 'anat'
 
         elif modality == 'bold':
