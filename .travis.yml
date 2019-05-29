@@ -21,6 +21,7 @@ cache:
 install: 
  # install requirements
  - pip install numpy scipy -U  # update to latest numpy
+ - pip install scipy==1.2  # statsmodel 0.9 cannot handle scipy 1.3
  - pip install -U pytest pytest-cov codecov
  - pip install Cython 
  - pip install scikit-image popeye 
