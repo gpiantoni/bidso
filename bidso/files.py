@@ -58,10 +58,10 @@ class file_Core():
             filename += '_ses-' + self.session
         if self.task is not None:
             filename += '_task-' + self.task
-        if self.run is not None and self.direction is None:
-            filename += '_run-' + self.run
         if self.acquisition is not None:
             filename += '_acq-' + self.acquisition
+        if self.run is not None and self.direction is None:
+            filename += '_run-' + self.run
         if self.direction is not None:
             filename += '_dir-' + self.direction
         if self.run is not None and self.direction is not None:
