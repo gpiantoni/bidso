@@ -1,0 +1,7 @@
+bidso.directories module
+========================
+
+.. automodule:: bidso.directories
+   :members:
+   :undoc-members:
+   :show-inheritance:

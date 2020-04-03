@@ -1,0 +1,7 @@
+bidso.files module
+==================
+
+.. automodule:: bidso.files
+   :members:
+   :undoc-members:
+   :show-inheritance:

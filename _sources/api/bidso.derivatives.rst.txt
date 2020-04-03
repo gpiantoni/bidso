@@ -1,0 +1,7 @@
+bidso.derivatives package
+=========================
+
+.. automodule:: bidso.derivatives
+   :members:
+   :undoc-members:
+   :show-inheritance:
