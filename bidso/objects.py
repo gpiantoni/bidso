@@ -1,5 +1,5 @@
 from .files import file_Core, file_Json, file_Tsv
-from .utils import replace_extension, replace_underscore
+from .utils import replace_extension, replace_underscore, remove_underscore
 from .find import find_in_bids
 
 
@@ -40,8 +40,15 @@ class Electrodes(file_Core):
 class Task(file_Core):
     def __init__(self, filename):
         super().__init__(filename)
-        self.events = file_Tsv(replace_underscore(self.filename, 'events.tsv'))
         self.json = file_Json(replace_extension(self.filename, '.json'))
+        events = replace_underscore(self.filename, 'events.tsv')
+        if not events.exists():  # remove only acq (workaround)
+            s = events.name
+            s = '_'.join(x for x in s.split('_') if not x.startswith('acq-'))
+            events = events.parent / s
+        if not events.exists():
+            raise ValueError(f'could not find events as {events}')
+        self.events = file_Tsv(events)
 
 
 class iEEG(Task):

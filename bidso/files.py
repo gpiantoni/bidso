@@ -63,7 +63,7 @@ class file_Core():
         if self.run is not None and self.direction is None:
             filename += '_run-' + self.run
         if self.direction is not None:
-            filename += '_dir-' + self.direction
+            filename += '_dir-' + str(self.direction)
         if self.run is not None and self.direction is not None:
             filename += '_run-' + self.run
         if self.modality is not None:
