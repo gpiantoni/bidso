@@ -32,10 +32,15 @@ class Electrodes(file_Core):
             filter_lambda = None
 
         return self.electrodes.get(filter_lambda=filter_lambda,
-                                   map_lambda=lambda e: (float(e['x']),
-                                                         float(e['y']),
-                                                         float(e['z'])))
+                                   map_lambda=lambda e: (_float(e['x']),
+                                                         _float(e['y']),
+                                                         _float(e['z'])))
 
+def _float(val):
+    if val == 'n/a':
+        return None
+    else:
+        return float(val)
 
 class Task(file_Core):
     def __init__(self, filename):
